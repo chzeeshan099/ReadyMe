@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "Smart Calculator",
+    "slug": "my-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/final icon (1).png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "jsEngine": "hermes",
+    "splash": {
+      "image": "./assets/final icon (1).png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/final icon (1).png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.zeeshandev099.smartcalculator"
+    },
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/final icon (1).png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "dd1bc9c5-2255-4b35-acfe-a69e9885c078"
+      }
+    }
+  }
+}
