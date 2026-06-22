@@ -3,20 +3,19 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
-  SafeAreaView,
   ScrollView,
-  Text,
   TextInput,
   View,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import MessageBubble from "../components/MessageBubble";
 import { sendStudyPrompt } from "../services/ai.service";
-import { COLORS } from "../../../shared/constants/colors";
+import { useAuthStore } from "../../auth/store/auth.store";
+import ScreenShell from "../../../shared/components/ScreenShell";
+import Button from "../../../shared/components/Button";
 
-export default function AiChatScreen({ route }) {
+export default function AiChatScreen({ route, navigation }) {
   const courseTitle = route.params?.courseTitle;
+  const user = useAuthStore((state) => state.user);
   const [messages, setMessages] = useState([
     {
       id: "welcome",
@@ -58,26 +57,32 @@ export default function AiChatScreen({ route }) {
   };
 
   return (
-    <LinearGradient colors={COLORS.bgGradient} style={{ flex: 1 }}>
-      <SafeAreaView className="flex-1">
+    <ScreenShell
+      navigation={navigation}
+      activeRoute="AiChat"
+      role={user?.role}
+      title="AI Study Assistant"
+      subtitle="Break topics into cleaner study steps, quick prompts, and revision plans."
+      showBack
+      padded={false}
+    >
+      <View className="flex-1 px-5">
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           className="flex-1"
         >
-          <ScrollView className="flex-1 px-5 pt-5" showsVerticalScrollIndicator={false}>
-            <Text className="text-3xl font-black text-white">AI Study Assistant</Text>
-            <Text className="mt-3 text-base leading-6 text-slate-300">
-              Use AI to simplify concepts, build revision plans, and get a cleaner study routine.
-            </Text>
-
-            <View className="mt-6">
+          <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+            <View className="mt-1">
               {messages.map((message) => (
                 <MessageBubble key={message.id} message={message} />
               ))}
             </View>
           </ScrollView>
 
-          <View className="border-t border-white/10 px-5 py-4">
+          <View
+            className="border-t px-1 py-4"
+            style={{ borderColor: "rgba(77,145,255,0.16)" }}
+          >
             <View className="flex-row items-end gap-3">
               <TextInput
                 value={input}
@@ -85,20 +90,16 @@ export default function AiChatScreen({ route }) {
                 placeholder="Ask about a topic, paper, or concept..."
                 placeholderTextColor="#7C8BA3"
                 multiline
-                className="max-h-28 flex-1 rounded-[22px] border border-white/10 bg-white/6 px-4 py-3 text-white"
+                className="max-h-28 flex-1 rounded-[22px] border bg-white/6 px-4 py-3 text-white"
+                style={{ borderColor: "rgba(77,145,255,0.18)" }}
               />
-              <Pressable
-                onPress={onSend}
-                className="rounded-2xl bg-blue-500 px-5 py-4"
-              >
-                <Text className="font-bold text-white">
-                  {sending ? "..." : "Send"}
-                </Text>
-              </Pressable>
+              <View className="w-[104px]">
+                <Button title={sending ? "..." : "Send"} onPress={onSend} />
+              </View>
             </View>
           </View>
         </KeyboardAvoidingView>
-      </SafeAreaView>
-    </LinearGradient>
+      </View>
+    </ScreenShell>
   );
 }

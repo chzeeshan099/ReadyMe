@@ -26,39 +26,17 @@ export default function AppNavigator() {
       id="app-stack"
       initialRouteName={initialRouteName}
       screenOptions={{
-        headerStyle: { backgroundColor: COLORS.background },
-        headerTintColor: COLORS.text,
-        headerTitleStyle: { fontWeight: "700" },
+        headerShown: false,
         contentStyle: { backgroundColor: COLORS.background },
         animation: "fade_from_bottom",
       }}
     >
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="TeacherDashboard"
-        component={TeacherDashboardScreen}
-        options={{ title: "Teacher Dashboard" }}
-      />
-      <Stack.Screen
-        name="AdminPanel"
-        component={AdminPanelScreen}
-        options={{ title: "Admin Panel" }}
-      />
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="TeacherDashboard" component={TeacherDashboardScreen} />
+      <Stack.Screen name="AdminPanel" component={AdminPanelScreen} />
       <Stack.Screen name="Courses" component={CoursesScreen} />
-      <Stack.Screen
-        name="CourseDetail"
-        component={CourseDetailScreen}
-        options={{ title: "Course Detail" }}
-      />
-      <Stack.Screen
-        name="AiChat"
-        component={AiChatScreen}
-        options={{ title: "AI Study Assistant" }}
-      />
+      <Stack.Screen name="CourseDetail" component={CourseDetailScreen} />
+      <Stack.Screen name="AiChat" component={AiChatScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
     </Stack.Navigator>
   );

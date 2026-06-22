@@ -1,8 +1,8 @@
 import React from "react";
-import { Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { ScrollView, Text, View } from "react-native";
 import { useAuthStore } from "../../auth/store/auth.store";
-import { COLORS } from "../../../shared/constants/colors";
+import ScreenShell from "../../../shared/components/ScreenShell";
+import Button from "../../../shared/components/Button";
 
 const adminMetrics = [
   { label: "Users Online", value: "386" },
@@ -15,19 +15,21 @@ export default function AdminPanelScreen({ navigation }) {
   const user = useAuthStore((state) => state.user);
 
   return (
-    <LinearGradient colors={COLORS.bgGradient} style={{ flex: 1 }}>
-      <SafeAreaView className="flex-1">
-        <ScrollView className="flex-1 px-5 pt-5" showsVerticalScrollIndicator={false}>
-          <Text className="text-3xl font-black text-white">Admin Control</Text>
-          <Text className="mt-3 text-base leading-6 text-slate-300">
-            Welcome {user?.fullName}. This panel is separate from student and teacher areas so admins can monitor growth, moderation, and content operations.
-          </Text>
-
-          <View className="mt-6 flex-row flex-wrap justify-between">
+    <ScreenShell
+      navigation={navigation}
+      activeRoute="AdminPanel"
+      role={user?.role}
+      title="Admin Control"
+      subtitle={`Welcome ${user?.fullName}. Monitor growth, moderation, and content operations from one control panel.`}
+    >
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+        <View className="pb-4">
+          <View className="mt-1 flex-row flex-wrap justify-between">
             {adminMetrics.map((metric) => (
               <View
                 key={metric.label}
-                className="mb-4 w-[48%] rounded-[24px] border border-white/10 bg-white/6 p-4"
+                className="mb-4 w-[48%] rounded-[24px] border bg-white/6 p-4"
+                style={{ borderColor: "rgba(77,145,255,0.18)" }}
               >
                 <Text className="text-xs uppercase tracking-[2px] text-blue-300">
                   {metric.label}
@@ -37,29 +39,31 @@ export default function AdminPanelScreen({ navigation }) {
             ))}
           </View>
 
-          <View className="rounded-[28px] border border-white/10 bg-[#071224] p-5">
+          <View
+            className="rounded-[28px] border bg-[#071224] p-5"
+            style={{
+              borderColor: "rgba(77,145,255,0.18)",
+              shadowColor: "#0B6DFF",
+              shadowOpacity: 0.16,
+              shadowRadius: 16,
+              elevation: 7,
+            }}
+          >
             <Text className="text-lg font-semibold text-white">Admin Actions</Text>
             <Text className="mt-3 leading-6 text-slate-300">
               Review registrations by role, inspect course quality, and manage educator onboarding from a cleaner control center.
             </Text>
-
             <View className="mt-5 gap-3">
-              <Pressable
-                onPress={() => navigation.navigate("Courses")}
-                className="rounded-2xl bg-blue-500 px-4 py-4"
-              >
-                <Text className="text-center font-bold text-white">Review Courses</Text>
-              </Pressable>
-              <Pressable
+              <Button title="Review Courses" onPress={() => navigation.navigate("Courses")} />
+              <Button
+                title="Admin Profile"
                 onPress={() => navigation.navigate("Profile")}
-                className="rounded-2xl bg-white/10 px-4 py-4"
-              >
-                <Text className="text-center font-bold text-white">Admin Profile</Text>
-              </Pressable>
+                variant="secondary"
+              />
             </View>
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    </LinearGradient>
+        </View>
+      </ScrollView>
+    </ScreenShell>
   );
 }

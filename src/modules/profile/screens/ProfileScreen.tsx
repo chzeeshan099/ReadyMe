@@ -1,13 +1,13 @@
 import React from "react";
-import { Alert, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { Alert, ScrollView, Text, View } from "react-native";
 import { useAuthStore } from "../../auth/store/auth.store";
 import { signOut } from "../../auth/services/auth.service";
 import { buildProfileStats } from "../services/profile.service";
-import { COLORS } from "../../../shared/constants/colors";
+import ScreenShell from "../../../shared/components/ScreenShell";
 import { formatRole, getInitials } from "../../../shared/utils/helpers";
+import Button from "../../../shared/components/Button";
 
-export default function ProfileScreen() {
+export default function ProfileScreen({ navigation }) {
   const user = useAuthStore((state) => state.user);
   const signOutLocal = useAuthStore((state) => state.signOutLocal);
   const stats = buildProfileStats(user);
@@ -22,10 +22,26 @@ export default function ProfileScreen() {
   };
 
   return (
-    <LinearGradient colors={COLORS.bgGradient} style={{ flex: 1 }}>
-      <SafeAreaView className="flex-1">
-        <ScrollView className="flex-1 px-5 pt-5" showsVerticalScrollIndicator={false}>
-          <View className="items-center rounded-[30px] border border-white/10 bg-white/6 p-6">
+    <ScreenShell
+      navigation={navigation}
+      activeRoute="Profile"
+      role={user?.role}
+      title="Profile"
+      subtitle="Account details, stats, and your current learning setup."
+      showBack
+    >
+      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+        <View className="pb-4">
+          <View
+            className="items-center rounded-[30px] border bg-white/6 p-6"
+            style={{
+              borderColor: "rgba(77,145,255,0.18)",
+              shadowColor: "#0B6DFF",
+              shadowOpacity: 0.16,
+              shadowRadius: 16,
+              elevation: 7,
+            }}
+          >
             <View className="h-20 w-20 items-center justify-center rounded-full bg-blue-500/20">
               <Text className="text-2xl font-black text-white">
                 {getInitials(user?.fullName)}
@@ -43,7 +59,8 @@ export default function ProfileScreen() {
               {stats.map((stat) => (
                 <View
                   key={stat.label}
-                  className="mb-3 w-[31%] rounded-[22px] bg-[#071224] px-3 py-4"
+                  className="mb-3 w-[31%] rounded-[22px] border bg-[#071224] px-3 py-4"
+                  style={{ borderColor: "rgba(77,226,255,0.16)" }}
                 >
                   <Text className="text-xs uppercase tracking-[2px] text-cyan-300">
                     {stat.label}
@@ -54,7 +71,10 @@ export default function ProfileScreen() {
             </View>
           </View>
 
-          <View className="mt-6 rounded-[28px] border border-white/10 bg-white/6 p-5">
+          <View
+            className="mt-6 rounded-[28px] border bg-white/6 p-5"
+            style={{ borderColor: "rgba(77,145,255,0.16)" }}
+          >
             <Text className="text-lg font-semibold text-white">Academic Setup</Text>
             <Text className="mt-3 text-slate-300">
               Level: {user?.level || "Not selected"}
@@ -64,14 +84,11 @@ export default function ProfileScreen() {
             </Text>
           </View>
 
-          <Pressable
-            onPress={onSignOut}
-            className="mb-10 mt-6 rounded-2xl bg-rose-500/90 px-5 py-4"
-          >
-            <Text className="text-center text-base font-bold text-white">Sign Out</Text>
-          </Pressable>
-        </ScrollView>
-      </SafeAreaView>
-    </LinearGradient>
+          <View className="mb-6 mt-6">
+            <Button title="Sign Out" onPress={onSignOut} />
+          </View>
+        </View>
+      </ScrollView>
+    </ScreenShell>
   );
 }

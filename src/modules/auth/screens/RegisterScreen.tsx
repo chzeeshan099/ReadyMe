@@ -15,6 +15,7 @@ import { z } from "zod";
 import Button from "../../../shared/components/Button";
 import Input from "../../../shared/components/Input";
 import { COLORS } from "../../../shared/constants/colors";
+import Atmosphere from "../../../shared/components/Atmosphere";
 import { useAuthStore } from "../store/auth.store";
 import { register } from "../services/auth.service";
 import {
@@ -110,6 +111,7 @@ export default function RegisterScreen({ navigation }) {
 
   return (
     <LinearGradient colors={COLORS.bgGradient} style={{ flex: 1 }}>
+      <Atmosphere />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         className="flex-1"
@@ -122,7 +124,16 @@ export default function RegisterScreen({ navigation }) {
               and a dashboard built for your role.
             </Text>
 
-            <View className="mt-8 rounded-[28px] border border-white/10 bg-white/6 p-5">
+            <View
+              className="mt-8 rounded-[28px] border bg-white/6 p-5"
+              style={{
+                borderColor: "rgba(77,145,255,0.35)",
+                shadowColor: "#0B6DFF",
+                shadowOpacity: 0.28,
+                shadowRadius: 20,
+                elevation: 10,
+              }}
+            >
               <Text className="text-xs uppercase tracking-[3px] text-blue-300">
                 Role Setup
               </Text>
