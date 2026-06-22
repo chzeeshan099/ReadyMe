@@ -4,12 +4,12 @@
     "slug": "readyme-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/final icon (1).png",
+    "icon": "./assets/readyMe_logo.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "jsEngine": "hermes",
     "splash": {
-      "image": "./assets/final icon (1).png",
+      "image": "./assets/readyMe_logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#020712"
     },
@@ -19,7 +19,7 @@
     "android": {
       "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/final icon (1).png",
+        "foregroundImage": "./assets/readyMe_logo.png",
         "backgroundColor": "#020712"
       },
       "edgeToEdgeEnabled": true,
@@ -27,12 +27,13 @@
     },
     "web": {
       "bundler": "metro",
-      "favicon": "./assets/final icon (1).png"
+      "favicon": "./assets/readyMe_logo.png"
     },
     "extra": {
       "eas": {
-        "projectId": "dd1bc9c5-2255-4b35-acfe-a69e9885c078"
+        "projectId": "3b83706f-8a99-44ad-b6fd-8994a7b2bf05"
       }
-    }
+    },
+    "owner": "readyme"
   }
 }
