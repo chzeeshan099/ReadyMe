@@ -20,24 +20,12 @@ export default function CourseDetailScreen({ route, navigation }) {
     >
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         <View className="pb-4">
-          <View
-            className="rounded-[30px] border bg-white/6 p-5"
-            style={{
-              borderColor: "rgba(77,145,255,0.18)",
-              shadowColor: "#0B6DFF",
-              shadowOpacity: 0.16,
-              shadowRadius: 16,
-              elevation: 7,
-            }}
-          >
+          <View className="rounded-[30px] border border-edge-soft bg-white/6 p-5 shadow-neon-sm">
             <Text className="text-sm uppercase tracking-[3px] text-blue-300">
               {course.level}
             </Text>
 
-            <View
-              className="mt-6 rounded-[24px] border bg-[#071224] p-4"
-              style={{ borderColor: "rgba(77,226,255,0.2)" }}
-            >
+            <View className="mt-6 rounded-[24px] border border-edge-cyan bg-panel p-4">
               <Text className="text-lg font-semibold text-white">Course Snapshot</Text>
               <Text className="mt-3 text-slate-300">Duration: {course.duration}</Text>
               <Text className="mt-1 text-slate-300">
@@ -50,8 +38,7 @@ export default function CourseDetailScreen({ route, navigation }) {
               {course.syllabus.map((item) => (
                 <View
                   key={item}
-                  className="mt-3 rounded-2xl border bg-white/6 px-4 py-3"
-                  style={{ borderColor: "rgba(77,145,255,0.14)" }}
+                  className="mt-3 rounded-2xl border border-edge-soft bg-white/6 px-4 py-3"
                 >
                   <Text className="text-slate-200">{item}</Text>
                 </View>

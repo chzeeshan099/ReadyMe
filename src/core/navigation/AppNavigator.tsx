@@ -8,8 +8,6 @@ import AiChatScreen from "@/modules/ai-chat/screens/AiChatScreen";
 import ProfileScreen from "@/modules/profile/screens/ProfileScreen";
 import TeacherDashboardScreen from "@/modules/teacher/screens/TeacherDashboardScreen";
 import AdminPanelScreen from "@/modules/admin/screens/AdminPanelScreen";
-import { COLORS } from "@/shared/constants/colors";
-
 const Stack = createNativeStackNavigator<any>();
 
 export default function AppNavigator() {
@@ -27,8 +25,7 @@ export default function AppNavigator() {
       initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
-        contentStyle: { backgroundColor: COLORS.background },
-        animation: "fade_from_bottom",
+        animation: "none",
       }}
     >
       <Stack.Screen name="Home" component={HomeScreen} />

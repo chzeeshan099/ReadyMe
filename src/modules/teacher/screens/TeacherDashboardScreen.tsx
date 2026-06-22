@@ -27,8 +27,7 @@ export default function TeacherDashboardScreen({ navigation }) {
             {teacherCards.map((card) => (
               <View
                 key={card.label}
-                className="mb-4 w-[31%] rounded-[22px] border bg-white/6 px-3 py-4"
-                style={{ borderColor: "rgba(77,145,255,0.18)" }}
+                className="mb-4 w-[31%] rounded-[22px] border border-edge-soft bg-white/6 px-3 py-4"
               >
                 <Text className="text-xs uppercase tracking-[2px] text-cyan-300">
                   {card.label}
@@ -38,16 +37,7 @@ export default function TeacherDashboardScreen({ navigation }) {
             ))}
           </View>
 
-          <View
-            className="rounded-[28px] border bg-[#071224] p-5"
-            style={{
-              borderColor: "rgba(77,145,255,0.18)",
-              shadowColor: "#0B6DFF",
-              shadowOpacity: 0.16,
-              shadowRadius: 16,
-              elevation: 7,
-            }}
-          >
+          <View className="rounded-[28px] border border-edge-soft bg-panel p-5 shadow-neon-sm">
             <Text className="text-lg font-semibold text-white">Priority Actions</Text>
             <Text className="mt-3 leading-6 text-slate-300">
               Review student doubts, update weekly lesson plans, and launch AI-powered revision prompts for your classes.

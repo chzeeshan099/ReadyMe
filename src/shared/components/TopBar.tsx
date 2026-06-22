@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { COLORS, GLOW } from "@/shared/constants/colors";
+import { COLORS } from "@/shared/constants/colors";
 
 export default function TopBar({
   title,
@@ -17,8 +17,7 @@ export default function TopBar({
         {showBack ? (
           <Pressable
             onPress={onBack}
-            className="mb-4 h-11 w-11 items-center justify-center rounded-2xl border bg-white/6"
-            style={{ ...GLOW.panel, borderColor: "rgba(77,145,255,0.2)" }}
+            className="mb-4 h-11 w-11 items-center justify-center rounded-2xl border border-edge-soft bg-white/6 shadow-neon-sm"
           >
             <MaterialIcons name="arrow-back-ios-new" size={18} color={COLORS.text} />
           </Pressable>

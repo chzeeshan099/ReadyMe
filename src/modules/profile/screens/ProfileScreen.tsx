@@ -32,17 +32,8 @@ export default function ProfileScreen({ navigation }) {
     >
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         <View className="pb-4">
-          <View
-            className="items-center rounded-[30px] border bg-white/6 p-6"
-            style={{
-              borderColor: "rgba(77,145,255,0.18)",
-              shadowColor: "#0B6DFF",
-              shadowOpacity: 0.16,
-              shadowRadius: 16,
-              elevation: 7,
-            }}
-          >
-            <View className="h-20 w-20 items-center justify-center rounded-full bg-blue-500/20">
+          <View className="items-center rounded-[30px] border border-edge-soft bg-white/6 p-6 shadow-neon-sm">
+            <View className="h-20 w-20 items-center justify-center rounded-full bg-brand-blue/20">
               <Text className="text-2xl font-black text-white">
                 {getInitials(user?.fullName)}
               </Text>
@@ -59,8 +50,7 @@ export default function ProfileScreen({ navigation }) {
               {stats.map((stat) => (
                 <View
                   key={stat.label}
-                  className="mb-3 w-[31%] rounded-[22px] border bg-[#071224] px-3 py-4"
-                  style={{ borderColor: "rgba(77,226,255,0.16)" }}
+                  className="mb-3 w-[31%] rounded-[22px] border border-edge-cyan bg-panel px-3 py-4"
                 >
                   <Text className="text-xs uppercase tracking-[2px] text-cyan-300">
                     {stat.label}
@@ -71,10 +61,7 @@ export default function ProfileScreen({ navigation }) {
             </View>
           </View>
 
-          <View
-            className="mt-6 rounded-[28px] border bg-white/6 p-5"
-            style={{ borderColor: "rgba(77,145,255,0.16)" }}
-          >
+          <View className="mt-6 rounded-[28px] border border-edge-soft bg-white/6 p-5">
             <Text className="text-lg font-semibold text-white">Academic Setup</Text>
             <Text className="mt-3 text-slate-300">
               Level: {user?.level || "Not selected"}

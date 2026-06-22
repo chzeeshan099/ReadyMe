@@ -1,14 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import {
-  Alert,
-  Animated,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import React from "react";
+import { Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +7,6 @@ import { z } from "zod";
 import Button from "@/shared/components/Button";
 import Input from "@/shared/components/Input";
 import { COLORS } from "@/shared/constants/colors";
-import Atmosphere from "@/shared/components/Atmosphere";
 import { login } from "@/modules/auth/services/auth.service";
 import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { USER_ROLES } from "@/modules/auth/types/auth.types";
@@ -32,7 +22,6 @@ export default function LoginScreen({ navigation }) {
   const setAuth = useAuthStore((state) => state.setAuth);
   const setLoading = useAuthStore((state) => state.setLoading);
   const loading = useAuthStore((state) => state.loading);
-  const glow = useRef(new Animated.Value(0.5)).current;
   const {
     control,
     handleSubmit,
@@ -47,23 +36,6 @@ export default function LoginScreen({ navigation }) {
       role: "student",
     },
   });
-
-  useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(glow, {
-          toValue: 1,
-          duration: 1800,
-          useNativeDriver: true,
-        }),
-        Animated.timing(glow, {
-          toValue: 0.45,
-          duration: 1800,
-          useNativeDriver: true,
-        }),
-      ]),
-    ).start();
-  }, [glow]);
 
   const selectedRole = watch("role");
 
@@ -80,48 +52,20 @@ export default function LoginScreen({ navigation }) {
   });
 
   return (
-    <LinearGradient colors={COLORS.bgGradient} style={{ flex: 1 }}>
-      <Atmosphere />
+    <LinearGradient colors={COLORS.bgGradient} className="flex-1">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         className="flex-1"
       >
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
-          showsVerticalScrollIndicator={false}
-        >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
           <View className="flex-1 px-6 pt-20 pb-8">
-            <Animated.View
-              style={{
-                opacity: glow,
-                transform: [
-                  {
-                    scale: glow.interpolate({
-                      inputRange: [0.45, 1],
-                      outputRange: [0.96, 1.04],
-                    }),
-                  },
-                ],
-              }}
-              className="absolute -top-10 right-[-30px] h-64 w-64 rounded-full bg-[#0B6DFF]/20"
-            />
-
             <Text className="text-4xl font-black text-white">ReadyMe</Text>
             <Text className="mt-3 text-base leading-6 text-slate-300">
               Cambridge-assistant style learning app with guided study, AI help,
               and role-based dashboards.
             </Text>
 
-            <View
-              className="mt-8 rounded-[28px] border bg-white/6 p-5"
-              style={{
-                borderColor: "rgba(77,145,255,0.35)",
-                shadowColor: "#0B6DFF",
-                shadowOpacity: 0.28,
-                shadowRadius: 20,
-                elevation: 10,
-              }}
-            >
+            <View className="mt-8 rounded-[28px] border border-edge-soft bg-white/6 p-5 shadow-neon-md">
               <Text className="text-xs uppercase tracking-[3px] text-blue-300">
                 Choose Role
               </Text>
@@ -132,11 +76,9 @@ export default function LoginScreen({ navigation }) {
                     <Pressable
                       key={role}
                       onPress={() => setValue("role", role)}
-                      className={`rounded-full px-4 py-3 ${active ? "bg-blue-500" : "bg-white/8"}`}
+                      className={`rounded-full px-4 py-3 ${active ? "border border-edge-cyan bg-brand-blue/20" : "bg-white/8"}`}
                     >
-                      <Text className="font-semibold text-white">
-                        {formatRole(role)}
-                      </Text>
+                      <Text className="font-semibold text-white">{formatRole(role)}</Text>
                     </Pressable>
                   );
                 })}
@@ -185,9 +127,7 @@ export default function LoginScreen({ navigation }) {
                 onPress={() => navigation.navigate("ForgotPassword")}
                 className="mt-4 self-end"
               >
-                <Text className="font-semibold text-blue-300">
-                  Forgot password?
-                </Text>
+                <Text className="font-semibold text-blue-300">Forgot password?</Text>
               </Pressable>
             </View>
 

@@ -28,8 +28,7 @@ export default function AdminPanelScreen({ navigation }) {
             {adminMetrics.map((metric) => (
               <View
                 key={metric.label}
-                className="mb-4 w-[48%] rounded-[24px] border bg-white/6 p-4"
-                style={{ borderColor: "rgba(77,145,255,0.18)" }}
+                className="mb-4 w-[48%] rounded-[24px] border border-edge-soft bg-white/6 p-4"
               >
                 <Text className="text-xs uppercase tracking-[2px] text-blue-300">
                   {metric.label}
@@ -39,16 +38,7 @@ export default function AdminPanelScreen({ navigation }) {
             ))}
           </View>
 
-          <View
-            className="rounded-[28px] border bg-[#071224] p-5"
-            style={{
-              borderColor: "rgba(77,145,255,0.18)",
-              shadowColor: "#0B6DFF",
-              shadowOpacity: 0.16,
-              shadowRadius: 16,
-              elevation: 7,
-            }}
-          >
+          <View className="rounded-[28px] border border-edge-soft bg-panel p-5 shadow-neon-sm">
             <Text className="text-lg font-semibold text-white">Admin Actions</Text>
             <Text className="mt-3 leading-6 text-slate-300">
               Review registrations by role, inspect course quality, and manage educator onboarding from a cleaner control center.

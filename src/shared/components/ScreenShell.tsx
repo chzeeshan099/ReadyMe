@@ -1,7 +1,6 @@
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, View } from "react-native";
-import Atmosphere from "@/shared/components/Atmosphere";
 import BottomDock from "@/shared/components/BottomDock";
 import TopBar from "@/shared/components/TopBar";
 import { COLORS } from "@/shared/constants/colors";
@@ -19,8 +18,7 @@ export default function ScreenShell({
   padded = true,
 }) {
   return (
-    <LinearGradient colors={COLORS.bgGradient} style={{ flex: 1 }}>
-      <Atmosphere />
+    <LinearGradient colors={COLORS.bgGradient} className="flex-1">
       <SafeAreaView className="flex-1">
         <View className={`flex-1 ${padded ? "px-5 pt-4" : "pt-4"}`}>
           <View className={padded ? "" : "px-5"}>

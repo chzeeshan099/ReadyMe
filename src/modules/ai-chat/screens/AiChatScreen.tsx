@@ -79,10 +79,7 @@ export default function AiChatScreen({ route, navigation }) {
             </View>
           </ScrollView>
 
-          <View
-            className="border-t px-1 py-4"
-            style={{ borderColor: "rgba(77,145,255,0.16)" }}
-          >
+          <View className="border-t border-edge-soft px-1 py-4">
             <View className="flex-row items-end gap-3">
               <TextInput
                 value={input}
@@ -90,8 +87,7 @@ export default function AiChatScreen({ route, navigation }) {
                 placeholder="Ask about a topic, paper, or concept..."
                 placeholderTextColor="#7C8BA3"
                 multiline
-                className="max-h-28 flex-1 rounded-[22px] border bg-white/6 px-4 py-3 text-white"
-                style={{ borderColor: "rgba(77,145,255,0.18)" }}
+                className="max-h-28 flex-1 rounded-[22px] border border-edge-soft bg-white/6 px-4 py-3 text-white"
               />
               <View className="w-[104px]">
                 <Button title={sending ? "..." : "Send"} onPress={onSend} />
