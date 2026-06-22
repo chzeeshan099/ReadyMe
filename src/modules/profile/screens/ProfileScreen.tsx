@@ -1,11 +1,11 @@
 import React from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
-import { useAuthStore } from "../../auth/store/auth.store";
-import { signOut } from "../../auth/services/auth.service";
-import { buildProfileStats } from "../services/profile.service";
-import ScreenShell from "../../../shared/components/ScreenShell";
-import { formatRole, getInitials } from "../../../shared/utils/helpers";
-import Button from "../../../shared/components/Button";
+import { useAuthStore } from "@/modules/auth/store/auth.store";
+import { signOut } from "@/modules/auth/services/auth.service";
+import { buildProfileStats } from "@/modules/profile/services/profile.service";
+import ScreenShell from "@/shared/components/ScreenShell";
+import { formatRole, getInitials } from "@/shared/utils/helpers";
+import Button from "@/shared/components/Button";
 
 export default function ProfileScreen({ navigation }) {
   const user = useAuthStore((state) => state.user);

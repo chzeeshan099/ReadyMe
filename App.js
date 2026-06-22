@@ -3,12 +3,12 @@ import React from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import AppNavigator from "./src/core/navigation/AppNavigator";
-import AuthNavigator from "./src/core/navigation/AuthNavigator";
-import { SupabaseProvider } from "./src/core/providers/SupabaseProvider";
-import { useAuthStore } from "./src/modules/auth/store/auth.store";
-import Loader from "./src/shared/components/Loader";
-import { COLORS } from "./src/shared/constants/colors";
+import AppNavigator from "@/core/navigation/AppNavigator";
+import AuthNavigator from "@/core/navigation/AuthNavigator";
+import { SupabaseProvider } from "@/core/providers/SupabaseProvider";
+import { useAuthStore } from "@/modules/auth/store/auth.store";
+import Loader from "@/shared/components/Loader";
+import { COLORS } from "@/shared/constants/colors";
 import "./global.css";
 
 const navTheme = {

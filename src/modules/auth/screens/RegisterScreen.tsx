@@ -12,18 +12,18 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import Button from "../../../shared/components/Button";
-import Input from "../../../shared/components/Input";
-import { COLORS } from "../../../shared/constants/colors";
-import Atmosphere from "../../../shared/components/Atmosphere";
-import { useAuthStore } from "../store/auth.store";
-import { register } from "../services/auth.service";
+import Button from "@/shared/components/Button";
+import Input from "@/shared/components/Input";
+import { COLORS } from "@/shared/constants/colors";
+import Atmosphere from "@/shared/components/Atmosphere";
+import { useAuthStore } from "@/modules/auth/store/auth.store";
+import { register } from "@/modules/auth/services/auth.service";
 import {
   STUDENT_LEVELS,
   SUBJECT_OPTIONS,
   USER_ROLES,
-} from "../types/auth.types";
-import { formatRole } from "../../../shared/utils/helpers";
+} from "@/modules/auth/types/auth.types";
+import { formatRole } from "@/shared/utils/helpers";
 
 const schema = z
   .object({

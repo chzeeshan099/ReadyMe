@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, Pressable, ScrollView, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import CourseCard from "../components/CourseCard";
-import { getFeaturedCourses } from "../../courses/services/course.service";
-import { useAuthStore } from "../../auth/store/auth.store";
-import { COLORS, GLOW } from "../../../shared/constants/colors";
-import ScreenShell from "../../../shared/components/ScreenShell";
-import { formatRole } from "../../../shared/utils/helpers";
+import CourseCard from "@/modules/home/components/CourseCard";
+import { getFeaturedCourses } from "@/modules/courses/services/course.service";
+import { useAuthStore } from "@/modules/auth/store/auth.store";
+import { COLORS, GLOW } from "@/shared/constants/colors";
+import ScreenShell from "@/shared/components/ScreenShell";
+import { formatRole } from "@/shared/utils/helpers";
 
 const quickLinks = [
   { label: "Courses", icon: "menu-book", route: "Courses" },

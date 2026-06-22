@@ -1,6 +1,6 @@
-import { ENV } from "../../../config/env";
-import { delay, slugifyId } from "../../../shared/utils/helpers";
-import { supabase } from "../../../shared/lib/supabase";
+import { ENV } from "@/config/env";
+import { delay, slugifyId } from "@/shared/utils/helpers";
+import { supabase } from "@/shared/lib/supabase";
 
 export function mapSupabaseUser(user) {
   const metadata = user.user_metadata || {};

@@ -1,4 +1,4 @@
-import { delay } from "../../../shared/utils/helpers";
+import { delay } from "@/shared/utils/helpers";
 
 export async function sendStudyPrompt(input, courseTitle) {
   await delay(450);

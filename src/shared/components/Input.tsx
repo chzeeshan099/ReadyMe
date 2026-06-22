@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TextInput, View } from "react-native";
-import { GLOW } from "../constants/colors";
+import { GLOW } from "@/shared/constants/colors";
 
 export default function Input({ label, error, ...props }) {
   return (

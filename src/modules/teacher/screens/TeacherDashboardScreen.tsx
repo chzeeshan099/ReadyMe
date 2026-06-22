@@ -1,8 +1,8 @@
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
-import { useAuthStore } from "../../auth/store/auth.store";
-import ScreenShell from "../../../shared/components/ScreenShell";
-import Button from "../../../shared/components/Button";
+import { useAuthStore } from "@/modules/auth/store/auth.store";
+import ScreenShell from "@/shared/components/ScreenShell";
+import Button from "@/shared/components/Button";
 
 const teacherCards = [
   { label: "Active Classes", value: "7" },

@@ -7,11 +7,11 @@ import {
   TextInput,
   View,
 } from "react-native";
-import MessageBubble from "../components/MessageBubble";
-import { sendStudyPrompt } from "../services/ai.service";
-import { useAuthStore } from "../../auth/store/auth.store";
-import ScreenShell from "../../../shared/components/ScreenShell";
-import Button from "../../../shared/components/Button";
+import MessageBubble from "@/modules/ai-chat/components/MessageBubble";
+import { sendStudyPrompt } from "@/modules/ai-chat/services/ai.service";
+import { useAuthStore } from "@/modules/auth/store/auth.store";
+import ScreenShell from "@/shared/components/ScreenShell";
+import Button from "@/shared/components/Button";
 
 export default function AiChatScreen({ route, navigation }) {
   const courseTitle = route.params?.courseTitle;

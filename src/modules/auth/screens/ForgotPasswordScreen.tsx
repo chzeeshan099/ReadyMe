@@ -11,11 +11,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import Button from "../../../shared/components/Button";
-import Input from "../../../shared/components/Input";
-import { COLORS } from "../../../shared/constants/colors";
-import Atmosphere from "../../../shared/components/Atmosphere";
-import { forgotPassword } from "../services/auth.service";
+import Button from "@/shared/components/Button";
+import Input from "@/shared/components/Input";
+import { COLORS } from "@/shared/constants/colors";
+import Atmosphere from "@/shared/components/Atmosphere";
+import { forgotPassword } from "@/modules/auth/services/auth.service";
 
 const schema = z.object({
   email: z.string().email("Enter a valid email"),

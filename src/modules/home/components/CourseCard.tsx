@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { COLORS, GLOW } from "../../../shared/constants/colors";
+import { COLORS, GLOW } from "@/shared/constants/colors";
 
 export default function CourseCard({ course, onPress }) {
   return (

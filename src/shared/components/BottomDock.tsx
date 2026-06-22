@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { COLORS, GLOW } from "../constants/colors";
+import { COLORS, GLOW } from "@/shared/constants/colors";
 
 const studentItems = [
   { label: "Home", icon: "home-filled", route: "Home" },

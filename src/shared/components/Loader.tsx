@@ -1,6 +1,6 @@
 import React from "react";
 import { ActivityIndicator, Text, View } from "react-native";
-import { COLORS } from "../constants/colors";
+import { COLORS } from "@/shared/constants/colors";
 
 export default function Loader({ text = "Loading...", fullScreen = false }) {
   return (

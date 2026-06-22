@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { GLOW } from "../constants/colors";
+import { GLOW } from "@/shared/constants/colors";
 
 export default function Button({ title, onPress, disabled = false, variant = "primary" }) {
   const isPrimary = variant === "primary";

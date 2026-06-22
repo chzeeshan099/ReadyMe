@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { supabase } from "../../shared/lib/supabase";
-import { useAuthStore } from "../../modules/auth/store/auth.store";
-import { mapSupabaseUser } from "../../modules/auth/services/auth.service";
+import { supabase } from "@/shared/lib/supabase";
+import { useAuthStore } from "@/modules/auth/store/auth.store";
+import { mapSupabaseUser } from "@/modules/auth/services/auth.service";
 
 export function SupabaseProvider({ children }) {
   const setAuth = useAuthStore((state) => state.setAuth);

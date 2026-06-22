@@ -1,9 +1,9 @@
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
-import { getCourseById } from "../services/course.service";
-import { useAuthStore } from "../../auth/store/auth.store";
-import ScreenShell from "../../../shared/components/ScreenShell";
-import Button from "../../../shared/components/Button";
+import { getCourseById } from "@/modules/courses/services/course.service";
+import { useAuthStore } from "@/modules/auth/store/auth.store";
+import ScreenShell from "@/shared/components/ScreenShell";
+import Button from "@/shared/components/Button";
 
 export default function CourseDetailScreen({ route, navigation }) {
   const course = getCourseById(route.params?.courseId);
