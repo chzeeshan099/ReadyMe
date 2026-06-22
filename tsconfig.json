@@ -1,0 +1,13 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "allowJs": true,
+    "strict": false
+  },
+  "include": [
+    "App.js",
+    "src",
+    "index.js",
+    "nativewind-env.d.ts"
+  ]
+}
