@@ -6,22 +6,9 @@ import { StatusBar } from "expo-status-bar";
 import AppNavigator from "@/core/navigation/AppNavigator";
 import AuthNavigator from "@/core/navigation/AuthNavigator";
 import { SupabaseProvider } from "@/core/providers/SupabaseProvider";
+import { ThemeProvider, useAppTheme } from "@/core/providers/ThemeProvider";
 import { useAuthStore } from "@/modules/auth/store/auth.store";
-import Loader from "@/shared/components/Loader";
-import { COLORS } from "@/shared/constants/colors";
 import "./global.css";
-
-const navTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: COLORS.background,
-    card: COLORS.surface,
-    text: COLORS.text,
-    border: COLORS.border,
-    primary: COLORS.primary,
-  },
-};
 
 function RootNavigation() {
   const user = useAuthStore((state) => state.user);
@@ -29,15 +16,41 @@ function RootNavigation() {
   return user ? <AppNavigator /> : <AuthNavigator />;
 }
 
+function ThemedAppFrame() {
+  const { colors, isDark } = useAppTheme();
+
+  const navTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: colors.background,
+      card: colors.surface,
+      text: colors.text,
+      border: colors.border,
+      primary: colors.primary,
+    },
+  };
+
+  return (
+    <NavigationContainer theme={navTheme}>
+      <StatusBar
+        style={isDark ? "light" : "dark"}
+        translucent={false}
+        backgroundColor={colors.header}
+      />
+      <RootNavigation />
+    </NavigationContainer>
+  );
+}
+
 export default function App() {
   return (
     <SafeAreaProvider>
-      <SupabaseProvider>
-        <NavigationContainer theme={navTheme}>
-          <StatusBar style="light" />
-          <RootNavigation />
-        </NavigationContainer>
-      </SupabaseProvider>
+      <ThemeProvider>
+        <SupabaseProvider>
+          <ThemedAppFrame />
+        </SupabaseProvider>
+      </ThemeProvider>
     </SafeAreaProvider>
   );
 }

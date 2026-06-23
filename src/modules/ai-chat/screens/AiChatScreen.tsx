@@ -12,12 +12,14 @@ import { sendStudyPrompt } from "@/modules/ai-chat/services/ai.service";
 import { useAuthStore } from "@/modules/auth/store/auth.store";
 import ScreenShell from "@/shared/components/ScreenShell";
 import Button from "@/shared/components/Button";
+import { useAppTheme } from "@/core/providers/ThemeProvider";
 
 export default function AiChatScreen({ route, navigation }) {
   const courseTitle = route.params?.courseTitle;
   const activeRoute = route.params?.activeRoute || "AiAssistant";
   const screenTitle = route.params?.screenTitle || "Ai Assistant";
   const user = useAuthStore((state) => state.user);
+  const { colors } = useAppTheme();
   const [messages, setMessages] = useState([
     {
       id: "welcome",
@@ -68,7 +70,7 @@ export default function AiChatScreen({ route, navigation }) {
       showBack
       padded={false}
     >
-      <View className="flex-1 px-5">
+      <View className="flex-1 px-4">
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           className="flex-1"
@@ -81,15 +83,28 @@ export default function AiChatScreen({ route, navigation }) {
             </View>
           </ScrollView>
 
-          <View className="border-t border-edge-soft px-1 py-4">
+          <View
+            className="px-1 py-4"
+            style={{ borderTopWidth: 1, borderTopColor: colors.softBorder }}
+          >
             <View className="flex-row items-end gap-3">
               <TextInput
                 value={input}
                 onChangeText={setInput}
                 placeholder="Ask about a topic, paper, or concept..."
-                placeholderTextColor="#7C8BA3"
+                placeholderTextColor={colors.dim}
                 multiline
-                className="max-h-28 flex-1 rounded-[22px] border border-edge-soft bg-white/6 px-4 py-3 text-white"
+                style={{
+                  maxHeight: 112,
+                  flex: 1,
+                  borderRadius: 22,
+                  borderWidth: 1,
+                  borderColor: colors.softBorder,
+                  backgroundColor: colors.input,
+                  color: colors.text,
+                  paddingHorizontal: 16,
+                  paddingVertical: 12,
+                }}
               />
               <View className="w-[104px]">
                 <Button title={sending ? "..." : "Send"} onPress={onSend} />
@@ -101,3 +116,4 @@ export default function AiChatScreen({ route, navigation }) {
     </ScreenShell>
   );
 }
+

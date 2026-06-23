@@ -24,7 +24,7 @@ export default function AppNavigator() {
       initialRouteName="Dashboard"
       screenOptions={{
         headerShown: false,
-        animation: "none",
+        animation: "slide_from_right",
       }}
     >
       <Stack.Screen name="Dashboard" component={DashboardScreen} />

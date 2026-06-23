@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView, View } from "react-native";
+import { StatusBar, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AppDrawer from "@/shared/components/AppDrawer";
 import TopBar from "@/shared/components/TopBar";
-import { COLORS } from "@/shared/constants/colors";
+import { useAppTheme } from "@/core/providers/ThemeProvider";
 
 export default function ScreenShell({
   children,
@@ -18,12 +19,17 @@ export default function ScreenShell({
   padded = true,
 }) {
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const { colors, isDark } = useAppTheme();
 
   return (
-    <LinearGradient colors={COLORS.bgGradient} className="flex-1">
-      <SafeAreaView className="flex-1">
-        <View className={`flex-1 ${padded ? "px-5 pt-4" : "pt-4"}`}>
-          <View className={padded ? "" : "px-5"}>
+    <LinearGradient colors={colors.bgGradient} className="flex-1">
+      <SafeAreaView className="flex-1" edges={["top", "left", "right"]}>
+        <StatusBar
+          backgroundColor={colors.header}
+          barStyle={isDark ? "light-content" : "dark-content"}
+        />
+        <View className={`flex-1 ${padded ? "px-4 pt-3" : "pt-3"}`}>
+          <View className={padded ? "" : "px-4"}>
             <TopBar
               title={title}
               subtitle={subtitle}

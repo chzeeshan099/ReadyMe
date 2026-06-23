@@ -1,8 +1,11 @@
 import React from "react";
 import { Pressable, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { FONTS } from "@/shared/constants/colors";
+import { useAppTheme } from "@/core/providers/ThemeProvider";
 
 export default function Button({ title, onPress, disabled = false, variant = "primary" }) {
+  const { colors, isDark } = useAppTheme();
   const isPrimary = variant === "primary";
 
   return (
@@ -14,14 +17,24 @@ export default function Button({ title, onPress, disabled = false, variant = "pr
       <LinearGradient
         colors={
           isPrimary
-            ? ["#0A56D8", "#0B6DFF", "#35C3FF"]
-            : ["rgba(255,255,255,0.14)", "rgba(255,255,255,0.08)"]
+            ? colors.primaryGradient
+            : isDark
+              ? ["rgba(255,255,255,0.12)", "rgba(255,255,255,0.05)"]
+              : ["rgba(123,77,255,0.12)", "rgba(123,77,255,0.05)"]
         }
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
-        className={`border px-5 py-4 ${isPrimary ? "border-edge-cyan" : "border-white/10"}`}
+        className="border px-5 py-4"
+        style={{
+          borderColor: isPrimary ? colors.border : colors.softBorder,
+        }}
       >
-        <Text className="text-center text-base font-bold text-white">{title}</Text>
+        <Text
+          className="text-center text-base font-bold"
+          style={{ color: isPrimary || isDark ? "#FFFFFF" : colors.primaryDeep, fontFamily: FONTS.bodyMedium }}
+        >
+          {title}
+        </Text>
       </LinearGradient>
     </Pressable>
   );
