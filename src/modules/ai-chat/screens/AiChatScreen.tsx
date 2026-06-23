@@ -15,6 +15,8 @@ import Button from "@/shared/components/Button";
 
 export default function AiChatScreen({ route, navigation }) {
   const courseTitle = route.params?.courseTitle;
+  const activeRoute = route.params?.activeRoute || "AiAssistant";
+  const screenTitle = route.params?.screenTitle || "Ai Assistant";
   const user = useAuthStore((state) => state.user);
   const [messages, setMessages] = useState([
     {
@@ -59,9 +61,9 @@ export default function AiChatScreen({ route, navigation }) {
   return (
     <ScreenShell
       navigation={navigation}
-      activeRoute="AiChat"
+      activeRoute={activeRoute}
       role={user?.role}
-      title="AI Study Assistant"
+      title={screenTitle}
       subtitle="Break topics into cleaner study steps, quick prompts, and revision plans."
       showBack
       padded={false}

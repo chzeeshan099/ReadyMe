@@ -10,6 +10,8 @@ export default function TopBar({
   onBack,
   rightLabel,
   onRightPress,
+  showMenu = true,
+  onMenuPress,
 }) {
   return (
     <View className="mb-6 flex-row items-start justify-between">
@@ -30,11 +32,22 @@ export default function TopBar({
         ) : null}
       </View>
 
-      {rightLabel ? (
-        <Pressable onPress={onRightPress} className="pt-2">
-          <Text className="font-semibold text-blue-300">{rightLabel}</Text>
-        </Pressable>
-      ) : null}
+      <View className="flex-row items-center gap-3 pt-2">
+        {rightLabel ? (
+          <Pressable onPress={onRightPress}>
+            <Text className="font-semibold text-blue-300">{rightLabel}</Text>
+          </Pressable>
+        ) : null}
+
+        {showMenu ? (
+          <Pressable
+            onPress={onMenuPress}
+            className="h-11 w-11 items-center justify-center rounded-2xl border border-edge-soft bg-white/6 shadow-neon-sm"
+          >
+            <MaterialIcons name="menu" size={22} color={COLORS.text} />
+          </Pressable>
+        ) : null}
+      </View>
     </View>
   );
 }
