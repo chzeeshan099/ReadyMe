@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  ScrollView,
   Text,
   View,
 } from "react-native";
@@ -13,14 +14,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Button from "@/shared/components/Button";
 import Input from "@/shared/components/Input";
-import { COLORS } from "@/shared/constants/colors";
 import { forgotPassword } from "@/modules/auth/services/auth.service";
+import { useAppTheme } from "@/core/providers/ThemeProvider";
+import { FONTS } from "@/shared/constants/colors";
+import AnimatedEntrance from "@/shared/components/AnimatedEntrance";
+import { AuthCard, AuthHeader } from "@/modules/auth/components";
 
 const schema = z.object({
   email: z.string().email("Enter a valid email"),
 });
 
 export default function ForgotPasswordScreen({ navigation }) {
+  const { colors } = useAppTheme();
   const {
     control,
     handleSubmit,
@@ -41,49 +46,67 @@ export default function ForgotPasswordScreen({ navigation }) {
   });
 
   return (
-    <LinearGradient colors={COLORS.bgGradient} className="flex-1">
+    <LinearGradient colors={colors.bgGradient} className="flex-1">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
-        className="flex-1 justify-center px-6"
+        className="flex-1"
       >
-        <View className="rounded-[28px] border border-edge-soft bg-white/6 p-5 shadow-neon-md">
-          <Text className="text-3xl font-black text-white">Forgot Password</Text>
-          <Text className="mt-3 text-base leading-6 text-slate-300">
-            Enter your email and we will send reset instructions. If Supabase is
-            not configured yet, the app shows a local demo message instead.
-          </Text>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+          <View className="justify-center px-5 pb-8 pt-10">
+            <AnimatedEntrance delay={40}>
+              <AuthHeader
+                title="Forgot Password"
+                subtitle="Enter your email and we will prepare reset instructions for your account."
+                badge="Recovery"
+                showBack
+                onBack={() => navigation.goBack()}
+              />
+            </AnimatedEntrance>
 
-          <View className="mt-6">
-            <Controller
-              control={control}
-              name="email"
-              render={({ field: { onChange, value } }) => (
-                <Input
-                  label="Email"
-                  placeholder="student@readyme.app"
-                  value={value}
-                  onChangeText={onChange}
-                  autoCapitalize="none"
-                  keyboardType="email-address"
-                  error={errors.email?.message}
+            <AnimatedEntrance delay={120}>
+              <AuthCard title="Reset Access">
+                <Controller
+                  control={control}
+                  name="email"
+                  render={({ field: { onChange, value } }) => (
+                    <Input
+                      label="Email"
+                      placeholder="student@readyme.app"
+                      value={value}
+                      onChangeText={onChange}
+                      autoCapitalize="none"
+                      keyboardType="email-address"
+                      error={errors.email?.message}
+                    />
+                  )}
                 />
-              )}
-            />
-          </View>
 
-          <View className="mt-6 gap-3">
-            <Button
-              title={isSubmitting ? "Sending..." : "Send Reset Link"}
-              onPress={onSubmit}
-              disabled={isSubmitting}
-            />
-            <Pressable onPress={() => navigation.goBack()}>
-              <Text className="text-center font-semibold text-blue-300">
-                Back to login
-              </Text>
-            </Pressable>
+                <Text
+                  className="mt-4 text-sm leading-6"
+                  style={{ color: colors.muted, fontFamily: FONTS.body }}
+                >
+                  If Supabase is not configured yet, the app will show a local demo message.
+                </Text>
+
+                <View className="mt-6 gap-3">
+                  <Button
+                    title={isSubmitting ? "Sending..." : "Send Reset Link"}
+                    onPress={onSubmit}
+                    disabled={isSubmitting}
+                  />
+                  <Pressable onPress={() => navigation.goBack()}>
+                    <Text
+                      className="text-center"
+                      style={{ color: colors.primary, fontFamily: FONTS.bodyMedium }}
+                    >
+                      Back to login
+                    </Text>
+                  </Pressable>
+                </View>
+              </AuthCard>
+            </AnimatedEntrance>
           </View>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </LinearGradient>
   );

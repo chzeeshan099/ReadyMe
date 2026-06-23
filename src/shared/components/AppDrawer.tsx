@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { Animated, Pressable, ScrollView, Text, View } from "react-native";
+import { Alert, Animated, Pressable, ScrollView, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useAppTheme } from "@/core/providers/ThemeProvider";
 import { FONTS } from "@/shared/constants/colors";
 import { APP_MENU_ITEMS } from "@/shared/navigation/appMenu";
+import { signOut } from "@/modules/auth/services/auth.service";
+import { useAuthStore } from "@/modules/auth/store/auth.store";
 
 export default function AppDrawer({
   visible,
@@ -12,8 +14,20 @@ export default function AppDrawer({
   activeRoute,
 }) {
   const { colors } = useAppTheme();
+  const user = useAuthStore((state) => state.user);
+  const signOutLocal = useAuthStore((state) => state.signOutLocal);
   const slideAnim = useRef(new Animated.Value(320)).current;
   const overlayAnim = useRef(new Animated.Value(0)).current;
+
+  const onLogout = async () => {
+    try {
+      await signOut();
+      signOutLocal();
+      onClose();
+    } catch (error) {
+      Alert.alert("Logout failed", error.message);
+    }
+  };
 
   useEffect(() => {
     Animated.parallel([
@@ -114,6 +128,28 @@ export default function AppDrawer({
                 </Pressable>
               );
             })}
+
+            {user ? (
+              <Pressable
+                onPress={onLogout}
+                className="mt-6 flex-row items-center rounded-[24px] border px-4 py-4"
+                style={{ borderColor: colors.danger, backgroundColor: colors.input }}
+              >
+                <View
+                  className="h-11 w-11 items-center justify-center rounded-2xl"
+                  style={{ backgroundColor: colors.danger }}
+                >
+                  <MaterialIcons name="logout" size={20} color="#FFFFFF" />
+                </View>
+                <Text
+                  className="ml-4 flex-1 text-[16px]"
+                  style={{ color: colors.text, fontFamily: FONTS.bodyMedium }}
+                >
+                  Logout
+                </Text>
+                <MaterialIcons name="chevron-right" size={22} color={colors.danger} />
+              </Pressable>
+            ) : null}
           </ScrollView>
         </View>
       </Animated.View>

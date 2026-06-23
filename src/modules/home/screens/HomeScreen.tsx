@@ -4,9 +4,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 import CourseCard from "@/modules/home/components/CourseCard";
 import { getFeaturedCourses } from "@/modules/courses/services/course.service";
 import { useAuthStore } from "@/modules/auth/store/auth.store";
-import { COLORS } from "@/shared/constants/colors";
+import { FONTS } from "@/shared/constants/colors";
+import { useAppTheme } from "@/core/providers/ThemeProvider";
 import ScreenShell from "@/shared/components/ScreenShell";
 import { formatRole } from "@/shared/utils/helpers";
+import AnimatedEntrance from "@/shared/components/AnimatedEntrance";
 
 const quickLinks = [
   { label: "Courses", icon: "menu-book", route: "Courses" },
@@ -17,6 +19,7 @@ const quickLinks = [
 export default function HomeScreen({ navigation }) {
   const user = useAuthStore((state) => state.user);
   const featuredCourses = getFeaturedCourses(user);
+  const { colors } = useAppTheme();
 
   return (
     <ScreenShell
@@ -30,50 +33,83 @@ export default function HomeScreen({ navigation }) {
     >
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         <View className="pb-4">
-          <View className="rounded-[32px] border border-edge-soft bg-panel px-6 py-6 shadow-neon-md">
-            <Text className="text-[12px] uppercase tracking-[5px] text-cyan-300">
+          <AnimatedEntrance delay={50}>
+            <View
+              className="rounded-[32px] border px-6 py-6 shadow-neon-md"
+              style={{ borderColor: colors.border, backgroundColor: colors.surfaceAlt }}
+            >
+            <Text
+              className="text-[12px] uppercase tracking-[5px]"
+              style={{ color: colors.accent, fontFamily: FONTS.bodyMedium }}
+            >
               ReadyMe Pulse
             </Text>
-            <Text className="mt-3 text-[34px] font-black leading-[40px] text-white">
+            <Text
+              className="mt-3 text-[34px] leading-[40px]"
+              style={{ color: colors.text, fontFamily: FONTS.heading }}
+            >
               Smart learning. Real impact.
             </Text>
-            <Text className="mt-4 text-[15px] leading-7 text-slate-300">
+            <Text
+              className="mt-4 text-[15px] leading-7"
+              style={{ color: colors.muted, fontFamily: FONTS.body }}
+            >
               Your dashboard is tailored around level, subjects, and a cleaner study rhythm.
             </Text>
-          </View>
+            </View>
+          </AnimatedEntrance>
 
           <View className="mt-6 flex-row items-center justify-between">
-            {quickLinks.map((item) => (
-              <Pressable
-                key={item.label}
-                onPress={() => navigation.navigate(item.route)}
-                className="w-[31.5%] rounded-[26px] border border-edge-soft bg-panel px-4 py-5 shadow-neon-sm"
-              >
-                <View className="h-11 w-11 items-center justify-center rounded-2xl border border-edge-cyan bg-brand-blue/15 shadow-neon-sm">
-                  <MaterialIcons name={item.icon as any} size={20} color={COLORS.cyan} />
-                </View>
-                <Text className="mt-5 text-[17px] font-bold text-white">{item.label}</Text>
-                <Text className="mt-1 text-[12px] text-slate-400">Open</Text>
-              </Pressable>
+            {quickLinks.map((item, index) => (
+              <AnimatedEntrance key={item.label} delay={120 + index * 70} style={{ width: "31.5%" }}>
+                <Pressable
+                  onPress={() => navigation.navigate(item.route)}
+                  className="rounded-[26px] border px-4 py-5 shadow-neon-sm"
+                  style={{ borderColor: colors.softBorder, backgroundColor: colors.surface }}
+                >
+                  <View
+                    className="h-11 w-11 items-center justify-center rounded-2xl shadow-neon-sm"
+                    style={{ backgroundColor: colors.input }}
+                  >
+                    <MaterialIcons name={item.icon as any} size={20} color={colors.primary} />
+                  </View>
+                  <Text
+                    className="mt-5 text-[17px]"
+                    style={{ color: colors.text, fontFamily: FONTS.bodyMedium }}
+                  >
+                    {item.label}
+                  </Text>
+                  <Text
+                    className="mt-1 text-[12px]"
+                    style={{ color: colors.dim, fontFamily: FONTS.body }}
+                  >
+                    Open
+                  </Text>
+                </Pressable>
+              </AnimatedEntrance>
             ))}
           </View>
 
           <View className="mt-8 flex-row items-center justify-between">
-            <Text className="text-[30px] font-black tracking-[-0.8px] text-white">
+            <Text
+              className="text-[30px] tracking-[-0.8px]"
+              style={{ color: colors.text, fontFamily: FONTS.heading }}
+            >
               Featured Courses
             </Text>
             <Pressable onPress={() => navigation.navigate("Courses")}>
-              <Text className="font-semibold text-blue-300">See all</Text>
+              <Text style={{ color: colors.primary, fontFamily: FONTS.bodyMedium }}>See all</Text>
             </Pressable>
           </View>
 
           <View className="mt-4 pb-2">
-            {featuredCourses.map((course) => (
-              <CourseCard
-                key={course.id}
-                course={course}
-                onPress={() => navigation.navigate("CourseDetail", { courseId: course.id })}
-              />
+            {featuredCourses.map((course, index) => (
+              <AnimatedEntrance key={course.id} delay={220 + index * 70}>
+                <CourseCard
+                  course={course}
+                  onPress={() => navigation.navigate("CourseDetail", { courseId: course.id })}
+                />
+              </AnimatedEntrance>
             ))}
           </View>
         </View>

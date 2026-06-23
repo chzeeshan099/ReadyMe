@@ -14,7 +14,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Button from "@/shared/components/Button";
 import Input from "@/shared/components/Input";
-import { COLORS } from "@/shared/constants/colors";
+import { useAppTheme } from "@/core/providers/ThemeProvider";
+import { FONTS } from "@/shared/constants/colors";
 import { useAuthStore } from "@/modules/auth/store/auth.store";
 import { register } from "@/modules/auth/services/auth.service";
 import {
@@ -23,6 +24,8 @@ import {
   USER_ROLES,
 } from "@/modules/auth/types/auth.types";
 import { formatRole } from "@/shared/utils/helpers";
+import AnimatedEntrance from "@/shared/components/AnimatedEntrance";
+import { AuthCard, AuthHeader, AuthOptionChip } from "@/modules/auth/components";
 
 const schema = z
   .object({
@@ -52,6 +55,7 @@ const schema = z
   });
 
 export default function RegisterScreen({ navigation }) {
+  const { colors } = useAppTheme();
   const setAuth = useAuthStore((state) => state.setAuth);
   const setLoading = useAuthStore((state) => state.setLoading);
   const loading = useAuthStore((state) => state.loading);
@@ -109,159 +113,175 @@ export default function RegisterScreen({ navigation }) {
   });
 
   return (
-    <LinearGradient colors={COLORS.bgGradient} className="flex-1">
+    <LinearGradient colors={colors.bgGradient} className="flex-1">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         className="flex-1"
       >
         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-          <View className="px-6 pb-10 pt-16">
-            <Text className="text-4xl font-black text-white">Join ReadyMe</Text>
-            <Text className="mt-3 text-base leading-6 text-slate-300">
-              Create a future-ready account with custom learning paths, AI help,
-              and a dashboard built for your role.
-            </Text>
+          <View className="px-5 pb-10 pt-10">
+            <AnimatedEntrance delay={40}>
+              <AuthHeader
+                title="Join ReadyMe"
+                subtitle="Create your account and unlock a more modern, personalized learning space."
+                badge="Create account"
+                showBack
+                onBack={() => navigation.goBack()}
+              />
+            </AnimatedEntrance>
 
-            <View className="mt-8 rounded-[28px] border border-edge-soft bg-white/6 p-5 shadow-neon-md">
-              <Text className="text-xs uppercase tracking-[3px] text-blue-300">
-                Role Setup
-              </Text>
-              <View className="mt-4 flex-row flex-wrap gap-3">
-                {USER_ROLES.map((item) => {
-                  const active = role === item;
-                  return (
-                    <Pressable
+            <AnimatedEntrance delay={120}>
+              <AuthCard title="Role Setup">
+                <View className="flex-row flex-wrap gap-3">
+                  {USER_ROLES.map((item) => (
+                    <AuthOptionChip
                       key={item}
+                      active={role === item}
+                      label={formatRole(item)}
                       onPress={() => setValue("role", item, { shouldValidate: true })}
-                      className={`rounded-full px-4 py-3 ${active ? "border border-edge-cyan bg-brand-blue/20" : "bg-white/8"}`}
+                    />
+                  ))}
+                </View>
+
+                <Text
+                  className="mt-4 text-sm leading-6"
+                  style={{ color: colors.muted, fontFamily: FONTS.body }}
+                >
+                  {helperText}
+                </Text>
+
+                <View className="mt-6 gap-4">
+                  <Controller
+                    control={control}
+                    name="fullName"
+                    render={({ field: { onChange, value } }) => (
+                      <Input
+                        label="Full Name"
+                        placeholder="Muhammad Ali"
+                        value={value}
+                        onChangeText={onChange}
+                        error={errors.fullName?.message}
+                      />
+                    )}
+                  />
+                  <Controller
+                    control={control}
+                    name="email"
+                    render={({ field: { onChange, value } }) => (
+                      <Input
+                        label="Email"
+                        placeholder="name@readyme.app"
+                        value={value}
+                        onChangeText={onChange}
+                        autoCapitalize="none"
+                        keyboardType="email-address"
+                        error={errors.email?.message}
+                      />
+                    )}
+                  />
+                  <Controller
+                    control={control}
+                    name="password"
+                    render={({ field: { onChange, value } }) => (
+                      <Input
+                        label="Password"
+                        placeholder="Create password"
+                        value={value}
+                        onChangeText={onChange}
+                        secureTextEntry
+                        error={errors.password?.message}
+                      />
+                    )}
+                  />
+                </View>
+
+                {role === "student" ? (
+                  <View className="mt-6">
+                    <Text
+                      className="mb-3 text-sm"
+                      style={{ color: colors.text, fontFamily: FONTS.bodyMedium }}
                     >
-                      <Text className="font-semibold text-white">
-                        {formatRole(item)}
-                      </Text>
-                    </Pressable>
-                  );
-                })}
-              </View>
-
-              <Text className="mt-4 text-sm leading-6 text-slate-300">
-                {helperText}
-              </Text>
-
-              <View className="mt-6 gap-4">
-                <Controller
-                  control={control}
-                  name="fullName"
-                  render={({ field: { onChange, value } }) => (
-                    <Input
-                      label="Full Name"
-                      placeholder="Muhammad Ali"
-                      value={value}
-                      onChangeText={onChange}
-                      error={errors.fullName?.message}
-                    />
-                  )}
-                />
-                <Controller
-                  control={control}
-                  name="email"
-                  render={({ field: { onChange, value } }) => (
-                    <Input
-                      label="Email"
-                      placeholder="name@readyme.app"
-                      value={value}
-                      onChangeText={onChange}
-                      autoCapitalize="none"
-                      keyboardType="email-address"
-                      error={errors.email?.message}
-                    />
-                  )}
-                />
-                <Controller
-                  control={control}
-                  name="password"
-                  render={({ field: { onChange, value } }) => (
-                    <Input
-                      label="Password"
-                      placeholder="Create password"
-                      value={value}
-                      onChangeText={onChange}
-                      secureTextEntry
-                      error={errors.password?.message}
-                    />
-                  )}
-                />
-              </View>
-
-              {role === "student" ? (
-                <View className="mt-6">
-                  <Text className="text-sm font-semibold text-white">Select Level</Text>
-                  <View className="mt-3 flex-row flex-wrap gap-3">
-                    {STUDENT_LEVELS.map((level) => {
-                      const active = watch("level") === level;
-                      return (
-                        <Pressable
+                      Select Level
+                    </Text>
+                    <View className="flex-row flex-wrap gap-3">
+                      {STUDENT_LEVELS.map((level) => (
+                        <AuthOptionChip
                           key={level}
-                          onPress={() => setValue("level", level, { shouldValidate: true })}
-                          className={`rounded-2xl border px-4 py-3 ${active ? "border-edge-cyan bg-brand-blue/20" : "border-white/10 bg-white/6"}`}
-                        >
-                          <Text className="font-medium text-white">{level}</Text>
-                        </Pressable>
-                      );
-                    })}
+                          active={watch("level") === level}
+                          label={level}
+                          rounded="large"
+                          onPress={() =>
+                            setValue("level", level, { shouldValidate: true })
+                          }
+                        />
+                      ))}
+                    </View>
+                    {errors.level?.message ? (
+                      <Text
+                        className="mt-2 text-sm"
+                        style={{ color: colors.danger, fontFamily: FONTS.body }}
+                      >
+                        {errors.level.message}
+                      </Text>
+                    ) : null}
                   </View>
-                  {errors.level?.message ? (
-                    <Text className="mt-2 text-sm text-rose-300">
-                      {errors.level.message}
-                    </Text>
-                  ) : null}
-                </View>
-              ) : null}
+                ) : null}
 
-              {role !== "admin" ? (
-                <View className="mt-6">
-                  <Text className="text-sm font-semibold text-white">
-                    {role === "teacher" ? "Teaching Subjects" : "Preferred Subjects"}
-                  </Text>
-                  <View className="mt-3 flex-row flex-wrap gap-3">
-                    {SUBJECT_OPTIONS.map((subject) => {
-                      const active = subjects.includes(subject);
-                      return (
-                        <Pressable
+                {role !== "admin" ? (
+                  <View className="mt-6">
+                    <Text
+                      className="mb-3 text-sm"
+                      style={{ color: colors.text, fontFamily: FONTS.bodyMedium }}
+                    >
+                      {role === "teacher" ? "Teaching Subjects" : "Preferred Subjects"}
+                    </Text>
+                    <View className="flex-row flex-wrap gap-3">
+                      {SUBJECT_OPTIONS.map((subject) => (
+                        <AuthOptionChip
                           key={subject}
+                          active={subjects.includes(subject)}
+                          label={subject}
                           onPress={() => toggleSubject(subject)}
-                          className={`rounded-full px-4 py-3 ${active ? "border border-edge-cyan bg-brand-blue/20" : "bg-white/8"}`}
-                        >
-                          <Text className="font-medium text-white">{subject}</Text>
-                        </Pressable>
-                      );
-                    })}
+                        />
+                      ))}
+                    </View>
+                    {errors.subjects?.message ? (
+                      <Text
+                        className="mt-2 text-sm"
+                        style={{ color: colors.danger, fontFamily: FONTS.body }}
+                      >
+                        {errors.subjects.message}
+                      </Text>
+                    ) : null}
                   </View>
-                  {errors.subjects?.message ? (
-                    <Text className="mt-2 text-sm text-rose-300">
-                      {errors.subjects.message}
-                    </Text>
-                  ) : null}
+                ) : null}
+
+                <View className="mt-8">
+                  <Button
+                    title={loading ? "Creating Account..." : "Create ReadyMe Account"}
+                    onPress={onSubmit}
+                    disabled={loading}
+                  />
                 </View>
-              ) : null}
+              </AuthCard>
+            </AnimatedEntrance>
 
-              <View className="mt-8">
-                <Button
-                  title={loading ? "Creating Account..." : "Create ReadyMe Account"}
-                  onPress={onSubmit}
-                  disabled={loading}
-                />
+            <AnimatedEntrance delay={180}>
+              <View className="mt-6 flex-row items-center justify-center gap-2">
+                <Text style={{ color: colors.muted, fontFamily: FONTS.body }}>
+                  Already have an account?
+                </Text>
+                <Pressable onPress={() => navigation.navigate("Login")}>
+                  <Text style={{ color: colors.text, fontFamily: FONTS.bodyMedium }}>
+                    Sign in
+                  </Text>
+                </Pressable>
               </View>
-            </View>
-
-            <View className="mt-6 flex-row items-center justify-center gap-2">
-              <Text className="text-slate-300">Already have an account?</Text>
-              <Pressable onPress={() => navigation.navigate("Login")}>
-                <Text className="font-semibold text-white">Sign in</Text>
-              </Pressable>
-            </View>
+            </AnimatedEntrance>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </LinearGradient>
   );
 }
+
