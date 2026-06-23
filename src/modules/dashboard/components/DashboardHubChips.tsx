@@ -29,12 +29,12 @@ export default function DashboardHubChips({ navigation }) {
         Your Study Hub
       </Text>
 
-      <View className="mt-4 flex-row flex-wrap">
+      <View className="mt-4 flex-row gap-2 flex-wrap">
         {chips.map((chip) => (
           <Pressable
             key={chip.label}
             onPress={() => navigation.navigate(chip.route)}
-            className="mb-3 mr-3 flex-row items-center rounded-full border px-4 py-3"
+            className="mb-0 flex-row items-center rounded-full border px-4 py-3"
             style={{ borderColor: colors.border, backgroundColor: colors.surface }}
           >
             <MaterialIcons name={chip.icon as any} size={16} color={colors.secondary} />

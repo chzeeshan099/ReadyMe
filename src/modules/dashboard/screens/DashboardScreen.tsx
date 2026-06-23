@@ -19,7 +19,7 @@ export default function DashboardScreen({ navigation }) {
       navigation={navigation}
       activeRoute="Dashboard"
       title="Coordinate Assistant"
-      subtitle="Your new gen-z study dashboard with cleaner focus and better flow."
+      subtitle="Your new study dashboard with cleaner focus and better flow."
     >
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         <View className="pb-6">
