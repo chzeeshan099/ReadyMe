@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Animated } from "react-native";
 
 export default function AnimatedEntrance({
@@ -8,10 +8,17 @@ export default function AnimatedEntrance({
   duration = 520,
   style = undefined,
 }) {
+  const [hasAnimated, setHasAnimated] = useState(false);
   const opacity = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(distance)).current;
 
   useEffect(() => {
+    if (hasAnimated) {
+      opacity.setValue(1);
+      translateY.setValue(0);
+      return;
+    }
+
     Animated.parallel([
       Animated.timing(opacity, {
         toValue: 1,
@@ -27,8 +34,10 @@ export default function AnimatedEntrance({
         mass: 0.9,
         useNativeDriver: true,
       }),
-    ]).start();
-  }, [delay, distance, duration, opacity, translateY]);
+    ]).start(() => {
+      setHasAnimated(true);
+    });
+  }, [delay, distance, duration, hasAnimated, opacity, translateY]);
 
   return (
     <Animated.View style={[style, { opacity, transform: [{ translateY }] }]}>

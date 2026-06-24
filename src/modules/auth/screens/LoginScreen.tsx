@@ -1,6 +1,7 @@
 import React from "react";
 import { Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -23,6 +24,7 @@ const schema = z.object({
 
 export default function LoginScreen({ navigation }) {
   const { colors } = useAppTheme();
+  const insets = useSafeAreaInsets();
   const setAuth = useAuthStore((state) => state.setAuth);
   const setLoading = useAuthStore((state) => state.setLoading);
   const loading = useAuthStore((state) => state.loading);
@@ -57,98 +59,102 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <LinearGradient colors={colors.bgGradient} className="flex-1">
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        className="flex-1"
-      >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
-          <View className="flex-1 px-5 pt-10 pb-8">
-            <AnimatedEntrance delay={40}>
-              <AuthHeader
-                title="ReadyMe"
-                subtitle="Study smarter with a fresh dashboard, AI help, and focused exam tools."
-                badge="Welcome back"
-              />
-            </AnimatedEntrance>
+      <SafeAreaView className="flex-1" edges={["top", "left", "right", "bottom"]}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          className="flex-1"
+        >
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+            <View className="flex-1 px-5 pt-10">
+              <AnimatedEntrance delay={40}>
+                <AuthHeader
+                  title="ReadyMe"
+                  subtitle="Study smarter with a fresh dashboard, AI help, and focused exam tools."
+                  badge="Welcome back"
+                />
+              </AnimatedEntrance>
 
-            <AnimatedEntrance delay={120}>
-              <AuthCard title="Choose Role">
-                <View className="flex-row flex-wrap gap-3">
-                  {USER_ROLES.map((role) => (
-                    <AuthOptionChip
-                      key={role}
-                      active={selectedRole === role}
-                      label={formatRole(role)}
-                      onPress={() => setValue("role", role)}
+              <AnimatedEntrance delay={120}>
+                <AuthCard title="Choose Role">
+                  <View className="flex-row flex-wrap gap-3">
+                    {USER_ROLES.map((role) => (
+                      <AuthOptionChip
+                        key={role}
+                        active={selectedRole === role}
+                        label={formatRole(role)}
+                        onPress={() => setValue("role", role)}
+                      />
+                    ))}
+                  </View>
+
+                  <View className="mt-6 gap-4">
+                    <Controller
+                      control={control}
+                      name="email"
+                      render={({ field: { onChange, value } }) => (
+                        <Input
+                          label="Email"
+                          placeholder="student@readyme.app"
+                          value={value}
+                          onChangeText={onChange}
+                          keyboardType="email-address"
+                          autoCapitalize="none"
+                          error={errors.email?.message}
+                        />
+                      )}
                     />
-                  ))}
-                </View>
 
-                <View className="mt-6 gap-4">
-                  <Controller
-                    control={control}
-                    name="email"
-                    render={({ field: { onChange, value } }) => (
-                      <Input
-                        label="Email"
-                        placeholder="student@readyme.app"
-                        value={value}
-                        onChangeText={onChange}
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        error={errors.email?.message}
-                      />
-                    )}
-                  />
+                    <Controller
+                      control={control}
+                      name="password"
+                      render={({ field: { onChange, value } }) => (
+                        <Input
+                          label="Password"
+                          placeholder="Enter password"
+                          value={value}
+                          onChangeText={onChange}
+                          secureTextEntry
+                          error={errors.password?.message}
+                        />
+                      )}
+                    />
 
-                  <Controller
-                    control={control}
-                    name="password"
-                    render={({ field: { onChange, value } }) => (
-                      <Input
-                        label="Password"
-                        placeholder="Enter password"
-                        value={value}
-                        onChangeText={onChange}
-                        secureTextEntry
-                        error={errors.password?.message}
-                      />
-                    )}
-                  />
+                    <Button
+                      title={loading ? "Signing In..." : `Continue as ${formatRole(selectedRole)}`}
+                      onPress={onSubmit}
+                      disabled={loading}
+                    />
+                  </View>
 
-                  <Button
-                    title={loading ? "Signing In..." : `Continue as ${formatRole(selectedRole)}`}
-                    onPress={onSubmit}
-                    disabled={loading}
-                  />
-                </View>
+                  <Pressable
+                    onPress={() => navigation.navigate("ForgotPassword")}
+                    className="mt-4 self-end"
+                  >
+                    <Text style={{ color: colors.primary, fontFamily: FONTS.bodyMedium }}>
+                      Forgot password?
+                    </Text>
+                  </Pressable>
+                </AuthCard>
+              </AnimatedEntrance>
 
-                <Pressable
-                  onPress={() => navigation.navigate("ForgotPassword")}
-                  className="mt-4 self-end"
-                >
-                  <Text style={{ color: colors.primary, fontFamily: FONTS.bodyMedium }}>
-                    Forgot password?
+              <AnimatedEntrance delay={190}>
+                <View className="mt-6 flex-row items-center justify-center gap-2">
+                  <Text style={{ color: colors.muted, fontFamily: FONTS.body }}>
+                    New to ReadyMe?
                   </Text>
-                </Pressable>
-              </AuthCard>
-            </AnimatedEntrance>
+                  <Pressable onPress={() => navigation.navigate("Register")}>
+                    <Text style={{ color: colors.text, fontFamily: FONTS.bodyMedium }}>
+                      Create account
+                    </Text>
+                  </Pressable>
+                </View>
+              </AnimatedEntrance>
 
-            <AnimatedEntrance delay={190}>
-              <View className="mt-6 flex-row items-center justify-center gap-2">
-                <Text style={{ color: colors.muted, fontFamily: FONTS.body }}>
-                  New to ReadyMe?
-                </Text>
-                <Pressable onPress={() => navigation.navigate("Register")}>
-                  <Text style={{ color: colors.text, fontFamily: FONTS.bodyMedium }}>
-                    Create account
-                  </Text>
-                </Pressable>
-              </View>
-            </AnimatedEntrance>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+              <View style={{ height: 30, marginBottom: Math.max(insets.bottom, 0) }} />
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </LinearGradient>
   );
 }

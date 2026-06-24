@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -56,6 +57,7 @@ const schema = z
 
 export default function RegisterScreen({ navigation }) {
   const { colors } = useAppTheme();
+  const insets = useSafeAreaInsets();
   const setAuth = useAuthStore((state) => state.setAuth);
   const setLoading = useAuthStore((state) => state.setLoading);
   const loading = useAuthStore((state) => state.loading);
@@ -114,12 +116,13 @@ export default function RegisterScreen({ navigation }) {
 
   return (
     <LinearGradient colors={colors.bgGradient} className="flex-1">
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        className="flex-1"
-      >
-        <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-          <View className="px-5 pb-10 pt-10">
+      <SafeAreaView className="flex-1" edges={["top", "left", "right", "bottom"]}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          className="flex-1"
+        >
+          <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+            <View className="px-5 pt-10">
             <AnimatedEntrance delay={40}>
               <AuthHeader
                 title="Join ReadyMe"
@@ -266,22 +269,24 @@ export default function RegisterScreen({ navigation }) {
               </AuthCard>
             </AnimatedEntrance>
 
-            <AnimatedEntrance delay={180}>
-              <View className="mt-6 flex-row items-center justify-center gap-2">
-                <Text style={{ color: colors.muted, fontFamily: FONTS.body }}>
-                  Already have an account?
-                </Text>
-                <Pressable onPress={() => navigation.navigate("Login")}>
-                  <Text style={{ color: colors.text, fontFamily: FONTS.bodyMedium }}>
-                    Sign in
+              <AnimatedEntrance delay={180}>
+                <View className="mt-6 flex-row items-center justify-center gap-2">
+                  <Text style={{ color: colors.muted, fontFamily: FONTS.body }}>
+                    Already have an account?
                   </Text>
-                </Pressable>
-              </View>
-            </AnimatedEntrance>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+                  <Pressable onPress={() => navigation.navigate("Login")}>
+                    <Text style={{ color: colors.text, fontFamily: FONTS.bodyMedium }}>
+                      Sign in
+                    </Text>
+                  </Pressable>
+                </View>
+              </AnimatedEntrance>
+
+              <View style={{ height: 30, marginBottom: Math.max(insets.bottom, 0) }} />
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </LinearGradient>
   );
 }
-

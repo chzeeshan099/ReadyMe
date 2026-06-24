@@ -1,6 +1,7 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import { NavigationContainer, DarkTheme, DefaultTheme } from "@react-navigation/native";
+import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import AppNavigator from "@/core/navigation/AppNavigator";
@@ -19,10 +20,12 @@ function RootNavigation() {
 function ThemedAppFrame() {
   const { colors, isDark } = useAppTheme();
 
+  const baseTheme = isDark ? DarkTheme : DefaultTheme;
   const navTheme = {
-    ...DefaultTheme,
+    ...baseTheme,
+    dark: isDark,
     colors: {
-      ...DefaultTheme.colors,
+      ...baseTheme.colors,
       background: colors.background,
       card: colors.surface,
       text: colors.text,
@@ -32,14 +35,16 @@ function ThemedAppFrame() {
   };
 
   return (
-    <NavigationContainer theme={navTheme}>
-      <StatusBar
-        style={isDark ? "light" : "dark"}
-        translucent={false}
-        backgroundColor={colors.header}
-      />
-      <RootNavigation />
-    </NavigationContainer>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      <NavigationContainer theme={navTheme}>
+        <StatusBar
+          style={isDark ? "light" : "dark"}
+          translucent={false}
+          backgroundColor={colors.header}
+        />
+        <RootNavigation />
+      </NavigationContainer>
+    </View>
   );
 }
 

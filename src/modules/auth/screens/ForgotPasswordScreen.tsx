@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -26,6 +27,7 @@ const schema = z.object({
 
 export default function ForgotPasswordScreen({ navigation }) {
   const { colors } = useAppTheme();
+  const insets = useSafeAreaInsets();
   const {
     control,
     handleSubmit,
@@ -47,67 +49,71 @@ export default function ForgotPasswordScreen({ navigation }) {
 
   return (
     <LinearGradient colors={colors.bgGradient} className="flex-1">
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        className="flex-1"
-      >
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
-          <View className="justify-center px-5 pb-8 pt-10">
-            <AnimatedEntrance delay={40}>
-              <AuthHeader
-                title="Forgot Password"
-                subtitle="Enter your email and we will prepare reset instructions for your account."
-                badge="Recovery"
-                showBack
-                onBack={() => navigation.goBack()}
-              />
-            </AnimatedEntrance>
-
-            <AnimatedEntrance delay={120}>
-              <AuthCard title="Reset Access">
-                <Controller
-                  control={control}
-                  name="email"
-                  render={({ field: { onChange, value } }) => (
-                    <Input
-                      label="Email"
-                      placeholder="student@readyme.app"
-                      value={value}
-                      onChangeText={onChange}
-                      autoCapitalize="none"
-                      keyboardType="email-address"
-                      error={errors.email?.message}
-                    />
-                  )}
+      <SafeAreaView className="flex-1" edges={["top", "left", "right", "bottom"]}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          className="flex-1"
+        >
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+            <View className="justify-center px-5 pt-10">
+              <AnimatedEntrance delay={40}>
+                <AuthHeader
+                  title="Forgot Password"
+                  subtitle="Enter your email and we will prepare reset instructions for your account."
+                  badge="Recovery"
+                  showBack
+                  onBack={() => navigation.goBack()}
                 />
+              </AnimatedEntrance>
 
-                <Text
-                  className="mt-4 text-sm leading-6"
-                  style={{ color: colors.muted, fontFamily: FONTS.body }}
-                >
-                  If Supabase is not configured yet, the app will show a local demo message.
-                </Text>
-
-                <View className="mt-6 gap-3">
-                  <Button
-                    title={isSubmitting ? "Sending..." : "Send Reset Link"}
-                    onPress={onSubmit}
-                    disabled={isSubmitting}
+              <AnimatedEntrance delay={120}>
+                <AuthCard title="Reset Access">
+                  <Controller
+                    control={control}
+                    name="email"
+                    render={({ field: { onChange, value } }) => (
+                      <Input
+                        label="Email"
+                        placeholder="student@readyme.app"
+                        value={value}
+                        onChangeText={onChange}
+                        autoCapitalize="none"
+                        keyboardType="email-address"
+                        error={errors.email?.message}
+                      />
+                    )}
                   />
-                  <Pressable onPress={() => navigation.goBack()}>
-                    <Text
-                      className="text-center"
-                      style={{ color: colors.primary, fontFamily: FONTS.bodyMedium }}
-                    >
-                      Back to login
-                    </Text>
-                  </Pressable>
-                </View>
-              </AuthCard>
-            </AnimatedEntrance>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+
+                  <Text
+                    className="mt-4 text-sm leading-6"
+                    style={{ color: colors.muted, fontFamily: FONTS.body }}
+                  >
+                    If Supabase is not configured yet, the app will show a local demo message.
+                  </Text>
+
+                  <View className="mt-6 gap-3">
+                    <Button
+                      title={isSubmitting ? "Sending..." : "Send Reset Link"}
+                      onPress={onSubmit}
+                      disabled={isSubmitting}
+                    />
+                    <Pressable onPress={() => navigation.goBack()}>
+                      <Text
+                        className="text-center"
+                        style={{ color: colors.primary, fontFamily: FONTS.bodyMedium }}
+                      >
+                        Back to login
+                      </Text>
+                    </Pressable>
+                  </View>
+                </AuthCard>
+              </AnimatedEntrance>
+
+              <View style={{ height: 30, marginBottom: Math.max(insets.bottom, 0) }} />
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </LinearGradient>
   );
 }

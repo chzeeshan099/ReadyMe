@@ -1,5 +1,7 @@
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Easing } from "react-native";
+import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack";
+import { useAppTheme } from "@/core/providers/ThemeProvider";
 import { DashboardScreen } from "@/modules/dashboard";
 import { NotesScreen } from "@/modules/notes";
 import { TopicsPastPaperScreen } from "@/modules/topics-past-paper";
@@ -15,16 +17,35 @@ import TeacherDashboardScreen from "@/modules/teacher/screens/TeacherDashboardSc
 import AdminPanelScreen from "@/modules/admin/screens/AdminPanelScreen";
 import CoursesScreen from "@/modules/courses/screens/CoursesScreen";
 import CourseDetailScreen from "@/modules/courses/screens/CourseDetailScreen";
-const Stack = createNativeStackNavigator<any>();
+const Stack = createStackNavigator<any>();
 
 export default function AppNavigator() {
+  const { colors } = useAppTheme();
+
   return (
     <Stack.Navigator
       id="app-stack"
       initialRouteName="Dashboard"
       screenOptions={{
         headerShown: false,
-        animation: "slide_from_right",
+        cardStyle: { backgroundColor: colors.background },
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        transitionSpec: {
+          open: {
+            animation: "timing",
+            config: {
+              duration: 260,
+              easing: Easing.out(Easing.poly(4)),
+            },
+          },
+          close: {
+            animation: "timing",
+            config: {
+              duration: 220,
+              easing: Easing.out(Easing.poly(4)),
+            },
+          },
+        },
       }}
     >
       <Stack.Screen name="Dashboard" component={DashboardScreen} />
