@@ -3,7 +3,7 @@ import { Pressable, Text, View } from "react-native";
 import { FONTS } from "@/shared/constants/colors";
 import { useAppTheme } from "@/core/providers/ThemeProvider";
 
-export default function DashboardPlanCard() {
+export default function DashboardPlanCard({ onOpenTaskModal = () => {} }) {
   const { colors } = useAppTheme();
 
   return (
@@ -25,6 +25,7 @@ export default function DashboardPlanCard() {
           No tasks planned for today
         </Text>
         <Pressable
+          onPress={onOpenTaskModal}
           className="rounded-2xl px-4 py-3"
           style={{ backgroundColor: colors.primary }}
         >
@@ -34,4 +35,3 @@ export default function DashboardPlanCard() {
     </View>
   );
 }
-

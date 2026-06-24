@@ -6,4 +6,4 @@ export { default as DashboardPracticeCard } from "@/modules/dashboard/components
 export { default as DashboardCountdownCard } from "@/modules/dashboard/components/DashboardCountdownCard";
 export { default as DashboardCalendarCard } from "@/modules/dashboard/components/DashboardCalendarCard";
 export { default as DashboardTasksCard } from "@/modules/dashboard/components/DashboardTasksCard";
-
+export { default as DashboardTaskModal } from "@/modules/dashboard/components/DashboardTaskModal";

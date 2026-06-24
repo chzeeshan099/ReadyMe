@@ -3,7 +3,7 @@ import { Pressable, Text, View } from "react-native";
 import { FONTS } from "@/shared/constants/colors";
 import { useAppTheme } from "@/core/providers/ThemeProvider";
 
-export default function DashboardTasksCard() {
+export default function DashboardTasksCard({ onOpenTaskModal = () => {} }) {
   const { colors } = useAppTheme();
 
   return (
@@ -16,6 +16,7 @@ export default function DashboardTasksCard() {
           Upcoming Tasks
         </Text>
         <Pressable
+          onPress={onOpenTaskModal}
           className="rounded-full px-4 py-2"
           style={{ backgroundColor: colors.input }}
         >
@@ -29,6 +30,7 @@ export default function DashboardTasksCard() {
       >
         <Text style={{ color: colors.dim, fontFamily: FONTS.body }}>No upcoming tasks</Text>
         <Pressable
+          onPress={onOpenTaskModal}
           className="mt-4 rounded-2xl px-4 py-3"
           style={{ backgroundColor: colors.primary }}
         >
@@ -38,4 +40,3 @@ export default function DashboardTasksCard() {
     </View>
   );
 }
-

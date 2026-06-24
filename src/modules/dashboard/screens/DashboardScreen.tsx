@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
 import AnimatedEntrance from "@/shared/components/AnimatedEntrance";
 import ScreenShell from "@/shared/components/ScreenShell";
@@ -8,12 +8,15 @@ import {
   DashboardFeedbackCard,
   DashboardHero,
   DashboardHubChips,
+  DashboardTaskModal,
   DashboardPlanCard,
   DashboardPracticeCard,
   DashboardTasksCard,
 } from "@/modules/dashboard/components";
 
 export default function DashboardScreen({ navigation }) {
+  const [taskModalVisible, setTaskModalVisible] = useState(false);
+
   return (
     <ScreenShell
       navigation={navigation}
@@ -28,7 +31,7 @@ export default function DashboardScreen({ navigation }) {
           </AnimatedEntrance>
 
           <AnimatedEntrance delay={120} style={{ marginTop: 16 }}>
-            <DashboardPlanCard />
+            <DashboardPlanCard onOpenTaskModal={() => setTaskModalVisible(true)} />
           </AnimatedEntrance>
 
           <AnimatedEntrance delay={190} style={{ marginTop: 16 }}>
@@ -52,10 +55,14 @@ export default function DashboardScreen({ navigation }) {
           </AnimatedEntrance>
 
           <AnimatedEntrance delay={530} style={{ marginTop: 16 }}>
-            <DashboardTasksCard />
+            <DashboardTasksCard onOpenTaskModal={() => setTaskModalVisible(true)} />
           </AnimatedEntrance>
         </View>
       </ScrollView>
+      <DashboardTaskModal
+        visible={taskModalVisible}
+        onClose={() => setTaskModalVisible(false)}
+      />
     </ScreenShell>
   );
 }
