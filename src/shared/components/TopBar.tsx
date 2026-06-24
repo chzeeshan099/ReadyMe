@@ -38,19 +38,20 @@ export default function TopBar({
   return (
     <View className="mb-6">
       <LinearGradient
-        colors={
-          isDark
-            ? ["#07111F", "#0E1D36", "#102B4F", "#08101D"]
-            : ["#EAF4FF", "#D9EDFF", "#F6FBFF", "#DCEFFF"]
-        }
+        colors={ ["#07111F", "#0E1D36", "#102B4F", "#08101D"]}
+        // colors={
+        //   isDark
+        //     ? ["#07111F", "#0E1D36", "#102B4F", "#08101D"]
+        //     : ["#EAF4FF", "#D9EDFF", "#F6FBFF", "#DCEFFF"]
+        // }
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         className="overflow-hidden rounded-[22px]"
         style={{
           borderWidth: 1,
-          borderColor: isDark ? "rgba(85, 205, 255, 0.28)" : "rgba(0, 119, 255, 0.14)",
-          shadowColor: isDark ? "#39C6FF" : "#4DA3FF",
-          shadowOpacity: isDark ? 0.32 : 0.18,
+          borderColor: "rgba(85, 205, 255, 0.28)",
+          shadowColor: "#39C6FF",
+          shadowOpacity: 0.32,
           shadowRadius: 20,
           shadowOffset: { width: 0, height: 10 },
           elevation: 12,
@@ -61,29 +62,29 @@ export default function TopBar({
           style={{
             position: "absolute",
             top: -34,
-            left: -28,
+            left: -25,
             width: 120,
             height: 120,
             borderRadius: 999,
-            backgroundColor: isDark ? "rgba(0, 229, 255, 0.22)" : "rgba(77, 163, 255, 0.16)",
+            backgroundColor:"rgba(0, 229, 255, 0.66)" ,
           }}
         />
         <View
           pointerEvents="none"
           style={{
             position: "absolute",
-            right: -18,
+            right: -40,
             bottom: -42,
             width: 140,
             height: 140,
             borderRadius: 999,
-            backgroundColor: isDark ? "rgba(0, 119, 255, 0.18)" : "rgba(0, 140, 255, 0.12)",
+            backgroundColor:  "rgba(0, 119, 255, 0.815)" ,
           }}
         />
         <View
           className="flex-row items-center justify-between rounded-[22px] px-3 py-3"
           style={{
-            backgroundColor: isDark ? "rgba(6, 14, 28, 0.42)" : "rgba(255,255,255,0.46)",
+            backgroundColor:"rgba(6, 14, 28, 0.42)" ,
           }}
         >
           <View className="flex-row items-center gap-2">
@@ -93,7 +94,7 @@ export default function TopBar({
               hidden={showBack}
             />
             <HeaderIconButton
-              icon={isDark ? "light-mode" : "dark-mode"}
+              icon={ "light-mode" }
               onPress={toggleMode}
             />
           </View>
