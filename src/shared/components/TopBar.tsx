@@ -3,8 +3,7 @@ import { Image, Pressable, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useAppTheme } from "@/core/providers/ThemeProvider";
 import { FONTS } from "@/shared/constants/colors";
-
-const logoImage = require("../../../assets/logo_with_name_transparent.png");
+import logoImage from "../../../assets/only_name_transparent.png";
 
 function HeaderIconButton({ icon, onPress, hidden = false }) {
   return (
