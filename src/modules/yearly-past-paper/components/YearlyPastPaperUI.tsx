@@ -85,7 +85,7 @@ export function SearchCard({ value, onChangeText }) {
           onChangeText={onChangeText}
           placeholder="Search by subject name or code"
           placeholderTextColor={colors.dim}
-          className="ml-3 flex-1 py-4"
+          // className="ml-3 flex-1 py-4"
           style={{ color: colors.text, fontFamily: FONTS.body }}
         />
       </View>
@@ -109,7 +109,7 @@ export function SubjectHeroCard() {
         shadowOpacity: isDark ? 0.14 : 0.08,
         shadowRadius: 18,
         shadowOffset: { width: 0, height: 10 },
-        elevation: 6,
+        // elevation: 6,
       }}
     >
       <View
@@ -172,7 +172,7 @@ export function SubjectCard({ subject, onPress }: { subject: SubjectItem; onPres
         shadowOpacity: isDark ? 0.24 : 0.14,
         shadowRadius: 18,
         shadowOffset: { width: 0, height: 12 },
-        elevation: 8,
+        // elevation: 8,
       }}
     >
       <LinearGradient colors={cardGradient(isDark)} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
