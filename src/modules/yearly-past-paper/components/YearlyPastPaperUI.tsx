@@ -267,7 +267,6 @@ export function SessionCard({
         shadowOpacity: isDark ? 0.18 : 0.1,
         shadowRadius: 18,
         shadowOffset: { width: 0, height: 12 },
-        elevation: 8,
       }}
     >
       <LinearGradient colors={cardGradient(isDark)} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>

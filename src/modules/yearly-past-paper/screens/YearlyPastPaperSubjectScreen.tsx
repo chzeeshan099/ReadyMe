@@ -33,7 +33,7 @@ export default function YearlyPastPaperSubjectScreen({ navigation, route }) {
       navigation={navigation}
       activeRoute="YearlyPastPaper"
       title={subject.name}
-      subtitle={`Code ${subject.code} ke yearly sessions mein se koi bhi paper set open karein.`}
+      subtitle={`Code ${subject.code} yearly sessions open any paper.`}
     >
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
         {subject.sessions.map((session, index) => (
