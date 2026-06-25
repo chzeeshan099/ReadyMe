@@ -104,8 +104,7 @@ function buildMcqs(subjectName: string, paperCode: string): McqQuestion[] {
         { key: "D", text: `Concept choice D for question ${number}` },
       ],
       correctOption,
-      answerNote: `Correct answer ${correctOption} hai kyun ke is question ka tested concept ${subjectName.toLowerCase()} ke core syllabus point se linked hai.`,
-    };
+      answerNote: `The correct answer is ${correctOption} because this question is based on a key concept from the core ${subjectName.toLowerCase()} syllabus.`,    };
   });
 }
 
