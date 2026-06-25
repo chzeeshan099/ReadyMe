@@ -98,25 +98,27 @@ export default function AppDrawer({
                       navigation.navigate(item.route);
                     }
                   }}
-                  className="mb-3 flex-row items-center rounded-[24px] border px-4 py-4"
+                  className="flex-row items-center"
+                  // className="mb-2 flex-row items-center rounded-[24px] border px-4 py-4"
                   style={{
                     borderColor: active ? colors.primary : colors.softBorder,
-                    backgroundColor: active ? colors.card : colors.input,
+                    backgroundColor: active && colors.card,
+                    borderRadius:10,
                   }}
                 >
                   <View
                     className="h-11 w-11 items-center justify-center rounded-2xl"
-                    style={{ backgroundColor: active ? colors.primaryDeep : colors.card }}
+                    // style={{ backgroundColor: active ? colors.primaryDeep : colors.card }}
                   >
                     <MaterialIcons
                       name={item.icon as any}
                       size={21}
-                      color={active ? "#FFFFFF" : colors.text}
+                      color={active ? colors.primary : colors.text}
                     />
                   </View>
                   <Text
                     className="ml-4 flex-1 text-[16px] font-semibold"
-                    style={{ color: colors.text, fontFamily: FONTS.bodyMedium }}
+                    style={{ color: active ? colors.primary : colors.text, fontFamily: FONTS.bodyMedium }}
                   >
                     {item.label}
                   </Text>
