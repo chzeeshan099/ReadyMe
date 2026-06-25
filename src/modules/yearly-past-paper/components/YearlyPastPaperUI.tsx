@@ -6,6 +6,8 @@ import {
   Text,
   TextInput,
   View,
+  type StyleProp,
+  type ViewStyle,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -357,7 +359,7 @@ export function SessionHero({
     >
       <View className="flex-row items-center justify-between">
         <View className="flex-1 pr-3">
-          <Text className="text-[28px]" style={{ color: colors.text, fontFamily: FONTS.heading }}>
+          <Text className="text-2xl" style={{ color: colors.text, fontFamily: FONTS.heading }}>
             {subject.code} {subject.name}
           </Text>
           <Text
@@ -457,7 +459,7 @@ export function PaperSectionBlock({
   return (
     <View className="mt-8">
       <View className="mb-4 flex-row items-center justify-between">
-        <Text className="text-[28px]" style={{ color: colors.text, fontFamily: FONTS.heading }}>
+        <Text className="text-[18px]" style={{ color: colors.text, fontFamily: FONTS.heading }}>
           {section.title}
         </Text>
         <Pressable
@@ -778,6 +780,8 @@ export function McqAnswerDock({
   onSelect,
   onToggleReveal,
   onNext,
+  containerStyle,
+  fixed = false,
 }: {
   currentNumber: number;
   total: number;
@@ -787,6 +791,8 @@ export function McqAnswerDock({
   onSelect: (option: string) => void;
   onToggleReveal: () => void;
   onNext: () => void;
+  containerStyle?: StyleProp<ViewStyle>;
+  fixed?: boolean;
 }) {
   const { colors, isDark } = useAppTheme();
 
@@ -819,37 +825,40 @@ export function McqAnswerDock({
 
   return (
     <View
-      className="mt-4 rounded-[28px] border p-4"
-      style={{
-        borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(96,81,131,0.10)",
-        backgroundColor: isDark ? "#5D3A2D" : "#7B4DFF",
-      }}
+      className={`${fixed ? "" : "mt-4"} rounded-[28px] border p-4 `}
+      style={[
+        {
+          borderColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(96,81,131,0.10)",
+          backgroundColor: isDark ? "#5D3A2D" : "#7B4DFF",
+        },
+        containerStyle,
+      ]}
     >
       <View className="flex-row items-center justify-between">
         <View className="rounded-[16px] bg-black/70 px-4 py-3">
-          <Text className="text-[30px] text-white" style={{ fontFamily: FONTS.heading }}>
+          <Text className="text-xs text-white" style={{ fontFamily: FONTS.heading }}>
             {currentNumber}
           </Text>
         </View>
         <View className="flex-row items-center">
           <Pressable
             onPress={onToggleReveal}
-            className="mr-3 rounded-[16px] border px-4 py-3"
+            className="mr-3 rounded-[16px] border px-2 py-2"
             style={{ borderColor: "rgba(255,255,255,0.18)", backgroundColor: "rgba(0,0,0,0.24)" }}
           >
-            <MaterialIcons name={revealAnswer ? "visibility-off" : "visibility"} size={22} color="#FFFFFF" />
+            <MaterialIcons name={revealAnswer ? "visibility-off" : "visibility"} size={12} color="#FFFFFF" />
           </Pressable>
           <Pressable
             onPress={onNext}
-            className="rounded-[16px] border px-4 py-3"
+            className="rounded-[16px] border px-2 py-2"
             style={{ borderColor: "rgba(255,255,255,0.18)", backgroundColor: "rgba(0,0,0,0.24)" }}
           >
-            <MaterialIcons name="east" size={22} color="#FFFFFF" />
+            <MaterialIcons name="east" size={12} color="#FFFFFF" />
           </Pressable>
         </View>
       </View>
 
-      <View className="mt-4 flex-row flex-wrap justify-between">
+      <View className="mt-2 flex-row flex-wrap justify-between">
         {question.options.map((option) => {
           const optionColors = getOptionColors(option.key);
 
@@ -857,13 +866,13 @@ export function McqAnswerDock({
             <Pressable
               key={option.key}
               onPress={() => onSelect(option.key)}
-              className="mb-3 h-[68px] w-[48%] items-center justify-center rounded-[20px] border"
+              className="mb-2 h-[30px] w-[20%] items-center justify-center rounded-[20px] border"
               style={{
                 backgroundColor: optionColors.backgroundColor,
                 borderColor: optionColors.borderColor,
               }}
             >
-              <Text className="text-[28px]" style={{ color: optionColors.textColor, fontFamily: FONTS.heading }}>
+              <Text className="text-base" style={{ color: optionColors.textColor, fontFamily: FONTS.heading }}>
                 {option.key}
               </Text>
             </Pressable>

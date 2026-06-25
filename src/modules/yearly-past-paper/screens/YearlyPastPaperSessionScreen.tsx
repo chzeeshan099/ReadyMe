@@ -52,7 +52,7 @@ export default function YearlyPastPaperSessionScreen({ navigation, route }) {
       navigation={navigation}
       activeRoute="YearlyPastPaper"
       title={`${session.session} ${session.year}`}
-      subtitle={`${subject.name} ke four paper parts niche grouped cards mein available hain.`}
+      subtitle={`${subject.name} four paper parts grouped cards available below.`}
     >
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
         <AnimatedEntrance delay={50}>

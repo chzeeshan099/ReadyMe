@@ -1,15 +1,19 @@
 import React, { useMemo, useState } from "react";
-import { ScrollView } from "react-native";
-import ScreenShell from "@/shared/components/ScreenShell";
+import { ScrollView, StatusBar, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   FakeMcqPdf,
   McqAnswerDock,
   PdfCanvas,
   ViewerHeader,
 } from "@/modules/yearly-past-paper/components/YearlyPastPaperUI";
+import { useAppTheme } from "@/core/providers/ThemeProvider";
 import { getPaperVariantById, getSubjectById } from "@/modules/yearly-past-paper/data/yearlyPastPaperData";
 
 export default function YearlyMcqPaperScreen({ navigation, route }) {
+  const { colors, isDark } = useAppTheme();
+  const insets = useSafeAreaInsets();
   const paperData = getPaperVariantById(
     route.params?.subjectId,
     route.params?.sessionId,
@@ -26,14 +30,22 @@ export default function YearlyMcqPaperScreen({ navigation, route }) {
 
   if (!paperData || !subject || !currentQuestion) {
     return (
-      <ScreenShell
-        navigation={navigation}
-        activeRoute="YearlyPastPaper"
-        title="MCQ Missing"
-        subtitle="Requested MCQ paper available nahi hai."
-      >
-        <></>
-      </ScreenShell>
+      <LinearGradient colors={colors.bgGradient} className="flex-1">
+        <SafeAreaView className="flex-1">
+          <View className="flex-1 items-center justify-center px-6">
+            <StatusBar
+              backgroundColor={colors.header}
+              barStyle={isDark ? "light-content" : "dark-content"}
+            />
+            <ViewerHeader
+              title="MCQ Missing"
+              subtitle="Requested MCQ paper available nahi hai."
+              onBack={() => navigation.goBack()}
+              actions={[]}
+            />
+          </View>
+        </SafeAreaView>
+      </LinearGradient>
     );
   }
 
@@ -45,45 +57,74 @@ export default function YearlyMcqPaperScreen({ navigation, route }) {
   }).length;
 
   return (
-    <ScreenShell
-      navigation={navigation}
-      activeRoute="YearlyPastPaper"
-      title=""
-      subtitle=""
-      padded={false}
-    >
-      <ScrollView className="flex-1 px-4" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
-        <ViewerHeader
-          title="Paper"
-          subtitle={paperData.variant.pdfTitle}
-          onBack={() => navigation.goBack()}
-          actions={[
-            { icon: "refresh", label: "Retake" },
-            {
-              icon: revealAnswer ? "visibility-off" : "visibility",
-              label: "Answer",
-              onPress: () =>
-                setRevealedAnswers((current) => ({
-                  ...current,
-                  [currentQuestion.id]: !current[currentQuestion.id],
-                })),
-            },
-            { icon: "check-circle", label: `${correctCount}` },
-            { icon: "countertops", label: `${currentIndex + 1}/${mcqs.length}` },
-          ]}
+    <LinearGradient colors={colors.bgGradient} className="flex-1">
+      <SafeAreaView className="flex-1" edges={["top", "left", "right", "bottom"]}>
+        <StatusBar
+          backgroundColor={colors.header}
+          barStyle={isDark ? "light-content" : "dark-content"}
         />
+        <View className="flex-1 pt-3">
+          <View className="px-4">
+            <ViewerHeader
+              title="Paper"
+              subtitle={paperData.variant.pdfTitle}
+              onBack={() => navigation.goBack()}
+              actions={[
+                { icon: "refresh", label: "Retake" },
+                {
+                  icon: revealAnswer ? "visibility-off" : "visibility",
+                  label: "Answer",
+                  onPress: () =>
+                    setRevealedAnswers((current) => ({
+                      ...current,
+                      [currentQuestion.id]: !current[currentQuestion.id],
+                    })),
+                },
+                { icon: "check-circle", label: `${correctCount}` },
+                { icon: "countertops", label: `${currentIndex + 1}/${mcqs.length}` },
+              ]}
+            />
+          </View>
 
-        <PdfCanvas
-          title={paperData.variant.pdfTitle}
-          topActions={[
-            { icon: "screen-rotation" },
-            { icon: "search" },
-            { icon: "download" },
-          ]}
-        >
-          <FakeMcqPdf questions={mcqs} currentQuestionId={currentQuestion.id} />
-        </PdfCanvas>
+          <ScrollView
+            className="flex-1"
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{
+              paddingHorizontal: 16,
+              paddingTop: 16,
+              paddingBottom: 320 + Math.max(insets.bottom, 0),
+            }}
+          >
+            <PdfCanvas
+              title={paperData.variant.pdfTitle}
+              topActions={[
+                { icon: "screen-rotation" },
+                { icon: "search" },
+                { icon: "download" },
+              ]}
+            >
+              <FakeMcqPdf questions={mcqs} currentQuestionId={currentQuestion.id} />
+            </PdfCanvas>
+          </ScrollView>
 
+        </View>
+      </SafeAreaView>
+
+      <View
+        pointerEvents="box-none"
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          justifyContent: "flex-end",
+          paddingHorizontal: 16,
+          paddingBottom: Math.max(insets.bottom, 8),
+          zIndex: 2000,
+          elevation: 40,
+        }}
+      >
         <McqAnswerDock
           currentNumber={currentIndex + 1}
           total={mcqs.length}
@@ -102,9 +143,15 @@ export default function YearlyMcqPaperScreen({ navigation, route }) {
               [currentQuestion.id]: !current[currentQuestion.id],
             }))
           }
-          onNext={() => setCurrentIndex((current) => (current + 1 < mcqs.length ? current + 1 : current))}
+          onNext={() =>
+            setCurrentIndex((current) => (current + 1 < mcqs.length ? current + 1 : current))
+          }
+          fixed
+          containerStyle={{
+            marginTop: 0,
+          }}
         />
-      </ScrollView>
-    </ScreenShell>
+      </View>
+    </LinearGradient>
   );
 }
