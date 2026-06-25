@@ -5,7 +5,13 @@ import { useAppTheme } from "@/core/providers/ThemeProvider";
 import { DashboardScreen } from "@/modules/dashboard";
 import { NotesScreen } from "@/modules/notes";
 import { TopicsPastPaperScreen } from "@/modules/topics-past-paper";
-import { YearlyPastPaperScreen } from "@/modules/yearly-past-paper";
+import {
+  YearlyMcqPaperScreen,
+  YearlyPastPaperScreen,
+  YearlyPastPaperSessionScreen,
+  YearlyPastPaperSubjectScreen,
+  YearlyWrittenPaperScreen,
+} from "@/modules/yearly-past-paper";
 import { AiAssistantScreen } from "@/modules/ai-assistant";
 import { TestMockBuilderScreen } from "@/modules/test-mock-builder";
 import { PricingScreen } from "@/modules/pricing";
@@ -52,6 +58,10 @@ export default function AppNavigator() {
       <Stack.Screen name="Notes" component={NotesScreen} />
       <Stack.Screen name="TopicsPastPaper" component={TopicsPastPaperScreen} />
       <Stack.Screen name="YearlyPastPaper" component={YearlyPastPaperScreen} />
+      <Stack.Screen name="YearlyPastPaperSubject" component={YearlyPastPaperSubjectScreen} />
+      <Stack.Screen name="YearlyPastPaperSession" component={YearlyPastPaperSessionScreen} />
+      <Stack.Screen name="YearlyMcqPaper" component={YearlyMcqPaperScreen} />
+      <Stack.Screen name="YearlyWrittenPaper" component={YearlyWrittenPaperScreen} />
       <Stack.Screen name="AiAssistant" component={AiAssistantScreen} />
       <Stack.Screen name="TestMockBuilder" component={TestMockBuilderScreen} />
       <Stack.Screen name="Pricing" component={PricingScreen} />
