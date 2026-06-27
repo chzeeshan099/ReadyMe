@@ -63,7 +63,7 @@ export default function YearlyMcqPaperScreen({ navigation, route }) {
           backgroundColor={colors.header}
           barStyle={isDark ? "light-content" : "dark-content"}
         />
-        <View className="flex-1 pt-3">
+        <View className="flex-1">
           <View className="px-4">
             <ViewerHeader
               title="Paper"
