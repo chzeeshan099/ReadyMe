@@ -4,7 +4,13 @@ import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/
 import { useAppTheme } from "@/core/providers/ThemeProvider";
 import { DashboardScreen } from "@/modules/dashboard";
 import { NotesScreen } from "@/modules/notes";
-import { TopicsPastPaperScreen } from "@/modules/topics-past-paper";
+import {
+  TopicMcqPaperScreen,
+  TopicPastPaperCollectionScreen,
+  TopicPastPaperTopicScreen,
+  TopicsPastPaperScreen,
+  TopicWrittenPaperScreen,
+} from "@/modules/topics-past-paper";
 import {
   YearlyMcqPaperScreen,
   YearlyPastPaperScreen,
@@ -57,6 +63,10 @@ export default function AppNavigator() {
       <Stack.Screen name="Dashboard" component={DashboardScreen} />
       <Stack.Screen name="Notes" component={NotesScreen} />
       <Stack.Screen name="TopicsPastPaper" component={TopicsPastPaperScreen} />
+      <Stack.Screen name="TopicPastPaperTopic" component={TopicPastPaperTopicScreen} />
+      <Stack.Screen name="TopicPastPaperCollection" component={TopicPastPaperCollectionScreen} />
+      <Stack.Screen name="TopicMcqPaper" component={TopicMcqPaperScreen} />
+      <Stack.Screen name="TopicWrittenPaper" component={TopicWrittenPaperScreen} />
       <Stack.Screen name="YearlyPastPaper" component={YearlyPastPaperScreen} />
       <Stack.Screen name="YearlyPastPaperSubject" component={YearlyPastPaperSubjectScreen} />
       <Stack.Screen name="YearlyPastPaperSession" component={YearlyPastPaperSessionScreen} />
